@@ -25,6 +25,7 @@ class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
                 $subCategory = new SubCategory();
                 $subCategory->setName($subCategoryName);
                 $subCategory->setCategory($this->getReference($categoryName));
+                $this->addReference($subCategoryName, $subCategory);
                 $manager->persist($subCategory);
             }
         }
