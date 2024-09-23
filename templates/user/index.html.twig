@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!
+{% endblock %}
+
+{% block body %}
+
+	<div class="grid grid-cols-4 gap-4">
+		<div class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+			<a href="{{path('user_ad_index')}}">
+				{{ ux_icon('material-symbols-light:text-ad-outline-sharp', {class: 'w-10 text-[#BCC2D0]'}) }}
+				<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Annonces</h5>
+
+				<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Gérer mes annonces déposées</p>
+			</a>
+		</div>
+		<div class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+			<a href="{{path('user_ad_new')}}">
+				{{ ux_icon('ant-design:euro-outlined', {class: 'w-10 text-[#BCC2D0]'}) }}
+				<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Transactions</h5>
+
+				<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Suivre mes achats et mes ventes</p>
+			</a>
+		</div>
+		<div class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+			<a href="{{path('user_ad_new')}}">
+				{{ ux_icon('gg:profile', {class: 'w-10 text-[#BCC2D0]'}) }}
+				<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Profil</h5>
+
+				<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Modifier mon profil public et accéder à mes avis</p>
+			</a>
+		</div>
+		<div class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+			<a href="{{path('user_ad_new')}}">
+				{{ ux_icon('uil:setting', {class: 'w-10 text-[#BCC2D0]'}) }}
+				<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Paramètres</h5>
+
+				<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Compléter et modifier mes informations privées et préférences</p>
+			</a>
+		</div>
+		<div class=" max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+
+			<a href="{{path('app_logout')}}">
+				<h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Me déconnecter</h5>
+			</a>
+		</div>
+	</div>
+{% endblock %}
