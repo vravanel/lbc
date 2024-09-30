@@ -38,4 +38,7 @@ return [
         'version' => '2.5.1',
         'type' => 'css',
     ],
+    '@symfony/ux-live-component' => [
+        'path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js',
+    ],
 ];

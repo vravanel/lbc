@@ -1,11 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Ad{% endblock %}
+{% block title %}New Ad
+{% endblock %}
 
 {% block body %}
-    <h1>Create new Ad</h1>
-
-    {{ include('user/user_ad/_form.html.twig') }}
-
-    <a href="{{ path('user_ad_index') }}">back to list</a>
+	<twig:FormAd :form="form" :ad="ad" />
+	<a href="{{ path('user_ad_index') }}">back to list</a>
 {% endblock %}

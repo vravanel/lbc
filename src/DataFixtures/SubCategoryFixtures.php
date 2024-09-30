@@ -10,12 +10,12 @@ use Doctrine\Persistence\ObjectManager;
 class SubCategoryFixtures extends Fixture implements DependentFixtureInterface
 {
     public const SUBCATEGORIES = [
-        'Véhicules' => ['Voitures', 'Motos', 'Utilitaires', 'Camions', 'Caravaning'],
-        'Immobilier' => ['Ventes immobilières', 'Locations', 'Colocations'],
+        'Véhicules' => ['Voitures', 'Motos', 'Caravaning'],
+        'Immobilier' => ['Ventes immobilières', 'Locations'],
         'Multimédia' => ['Informatique', 'Consoles & Jeux vidéo', 'Image & Son', 'Téléphonie'],
-        'Maison' => ['Ameublement', 'Électroménager', 'Arts de la table', 'Décoration', 'Linge de maison', 'Bricolage', 'Jardinage'],
-        'Mode' => ['Vêtements', 'Chaussures', 'Montres & Bijoux'],
-        'Loisirs' => ['DVD / Films', 'CD / Musique', 'Livres', 'Animaux', 'Vélos', 'Sports & Hobbies', 'Instruments de musique', 'Jeux & Jouets'],
+        'Maison' => ['Ameublement', 'Électroménager'],
+        'Mode' => ['Vêtements', 'Chaussures'],
+        'Loisirs' => ['CD / Musique', 'Livres', 'Sports & Hobbies', 'Jeux & Jouets'],
     ];
 
     public function load(ObjectManager $manager): void
