@@ -20,6 +20,7 @@ class UserFixtures extends Fixture
             $user->setFirtname("user " . $i);
             $user->setLastname("user " . $i);
             $user->setUsername("pseudo " . $i);
+            $this->addReference("user_" . $i, $user);
             $manager->persist($user);
         }
 

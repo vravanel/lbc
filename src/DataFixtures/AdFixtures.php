@@ -24,8 +24,9 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
                         ->setCreateAt($faker->dateTimeInInterval('-1 year', 'now'))
                         ->setCity($faker->city())
                         ->setZipCode(rand('00000', '99999'))
-                        ->setSubCategory($this->getReference($subCategoryName));
-
+                        ->setSubCategory($this->getReference($subCategoryName))
+                        ->setUser($this->getReference("user_" . rand(1, 5)));
+                    $this->addReference($subCategoryName . $i, $ad);
                     $manager->persist($ad);
                 }
             }

@@ -47,9 +47,20 @@ class Ad
     #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'ad')]
     private Collection $images;
 
+    #[ORM\ManyToOne(inversedBy: 'ads')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
+    /**
+     * @var Collection<int, AdSpecification>
+     */
+    #[ORM\OneToMany(targetEntity: AdSpecification::class, mappedBy: 'ad')]
+    private Collection $adSpecifications;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->adSpecifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +188,48 @@ class Ad
             // set the owning side to null (unless already changed)
             if ($image->getAd() === $this) {
                 $image->setAd(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdSpecification>
+     */
+    public function getAdSpecifications(): Collection
+    {
+        return $this->adSpecifications;
+    }
+
+    public function addAdSpecification(AdSpecification $adSpecification): static
+    {
+        if (!$this->adSpecifications->contains($adSpecification)) {
+            $this->adSpecifications->add($adSpecification);
+            $adSpecification->setAd($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdSpecification(AdSpecification $adSpecification): static
+    {
+        if ($this->adSpecifications->removeElement($adSpecification)) {
+            // set the owning side to null (unless already changed)
+            if ($adSpecification->getAd() === $this) {
+                $adSpecification->setAd(null);
             }
         }
 

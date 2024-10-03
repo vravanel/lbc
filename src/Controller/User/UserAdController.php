@@ -2,26 +2,29 @@
 
 namespace App\Controller\User;
 
+use DateTime;
 use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
-use DateTime;
+use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/compte/annonce', name: 'user_')]
 class UserAdController extends AbstractController
 {
     #[Route('/', name: 'ad_index', methods: ['GET'])]
-    public function index(AdRepository $adRepository): Response
+    public function index(AdRepository $adRepository, Security $user, CategoryRepository $categoryRepository): Response
     {
         return $this->render('user/user_ad/index.html.twig', [
-            'ads' => $adRepository->findAll(),
+            'ads' => $adRepository->findBy(['user' => $user->getUser()], ['createAt' => "ASC"]),
+            'categories' => $categoryRepository->findAll(),
         ]);
     }
 
