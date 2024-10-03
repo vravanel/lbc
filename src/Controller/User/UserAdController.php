@@ -8,6 +8,7 @@ use App\Form\AdType;
 use App\Repository\AdRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,10 +21,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserAdController extends AbstractController
 {
     #[Route('/', name: 'ad_index', methods: ['GET'])]
-    public function index(AdRepository $adRepository, Security $user, CategoryRepository $categoryRepository): Response
+    public function index(Request $request, AdRepository $adRepository, Security $user, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
     {
+        $pagination = $paginator->paginate($adRepository->findBy(['user' => $user->getUser()], ['createAt' => "ASC"]), $request->query->getInt('page', 1), 10);
         return $this->render('user/user_ad/index.html.twig', [
-            'ads' => $adRepository->findBy(['user' => $user->getUser()], ['createAt' => "ASC"]),
+            'ads' => $pagination,
             'categories' => $categoryRepository->findAll(),
         ]);
     }
