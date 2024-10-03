@@ -16,9 +16,18 @@ class AdRepository extends ServiceEntityRepository
         parent::__construct($registry, Ad::class);
     }
 
-    public function queryFindAll()
+    public function findLikeName(string $search, ?string $subCategory)
     {
-        return $this->createQueryBuilder('a')->getQuery();
+        $queryBuilder = $this->createQueryBuilder('a')
+            ->leftJoin('a.subCategory', 's')
+            ->andWhere('a.title LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+        if ($subCategory) {
+            $queryBuilder->andWhere('s.name = :subCategory')
+                ->setParameter('subCategory', $subCategory);
+        }
+        return $queryBuilder->getQuery()
+            ->getResult();
     }
 
     //    /**

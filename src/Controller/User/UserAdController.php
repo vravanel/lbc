@@ -7,6 +7,7 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\SecurityBundle\Security;
@@ -14,19 +15,48 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 #[IsGranted('ROLE_USER')]
 #[Route('/compte/annonce', name: 'user_')]
 class UserAdController extends AbstractController
 {
     #[Route('/', name: 'ad_index', methods: ['GET'])]
-    public function index(Request $request, AdRepository $adRepository, Security $user, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
+    public function index(Request $request, AdRepository $adRepository, Security $user, SubCategoryRepository $subCategoryRepository, CategoryRepository $categoryRepository, PaginatorInterface $paginator): Response
     {
-        $pagination = $paginator->paginate($adRepository->findBy(['user' => $user->getUser()], ['createAt' => "ASC"]), $request->query->getInt('page', 1), 10);
+        $form = $this->createFormBuilder(null, ['method' => 'get'])
+            ->add('search', SearchType::class)
+            ->add('subCategory', ChoiceType::class, [
+                'choices' => array_reduce($categoryRepository->findAll(), function ($result, $category) use ($subCategoryRepository) {
+                
+                    $subCategories = $subCategoryRepository->findBy(['category' => $category]);
+                    $subCategoryChoices = [];
+                    foreach ($subCategories as $subCategory) {
+                        $subCategoryChoices[$subCategory->getName()] = $subCategory->getName();
+                    }
+                    $result[$category->getName()] = $subCategoryChoices;
+                    return $result;
+                }, [])
+            ])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $search = $form->get('search')->getData();
+            $subCategory = $form->get('subCategory')->getData();
+            $query = $adRepository->findLikeName($search, $subCategory);
+        } else {
+            $query = $adRepository->findBy(['user' => $user->getUser()], ['createAt' => "ASC"]);
+        }
+
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 10);
+
         return $this->render('user/user_ad/index.html.twig', [
             'ads' => $pagination,
-            'categories' => $categoryRepository->findAll(),
+            'form' => $form
         ]);
     }
 
