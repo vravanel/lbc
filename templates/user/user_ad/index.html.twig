@@ -9,60 +9,44 @@
 
 
 	{{form_start(form, {'attr' : {'class' : " flex w-7/12 mx-auto"}})}}
-		<div class="relative">
-			<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-				<svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 20 20">
-					<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-				</svg>
-			</div>
-			{{ form_widget(form.search, {'attr' : {'class' : 'block w-max p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}}) }}
+	<div class="relative">
+		<div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+			<svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 20 20">
+				<path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+			</svg>
 		</div>
+		{{ form_widget(form.search, {'attr' : {'class' : 'block w-max p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}}) }}
+	</div>
 
-		{{ form_widget(form.subCategory, { 'attr' : { 'class' : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' } }) }}
+	{{ form_widget(form.subCategory, { 'attr' : { 'class' : 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-4/12 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500' } }) }}
 
-		<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Rechercher</button>
+	<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Rechercher</button>
 	{{form_end(form)}}
 
+	{% for ad in ads %}
 
-	<table class="table">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Title</th>
-				<th>Description</th>
-				<th>Price</th>
-				<th>CreateAt</th>
-				<th>UpdateAt</th>
-				<th>City</th>
-				<th>ZipCode</th>
-				<th>actions</th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for ad in ads %}
-				<tr>
-					<td>{{ ad.id }}</td>
-					<td>{{ ad.title }}</td>
-					<td>{{ ad.description }}</td>
-					<td>{{ ad.price }}</td>
-					<td>{{ ad.createAt ? ad.createAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ ad.updateAt ? ad.updateAt|date('Y-m-d H:i:s') : '' }}</td>
-					<td>{{ ad.city }}</td>
-					<td>{{ ad.zipCode }}</td>
-					<td>
-						<a href="{{ path('user_ad_show', {'id': ad.id}) }}">show</a>
-						<a href="{{ path('user_ad_edit', {'id': ad.id}) }}">edit</a>
-					</td>
-				</tr>
-			{% else %}
-				<tr>
-					<td colspan="9">no records found</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+		<div class="flex flex-col md:flex-row items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 cursor-pointer">
+			<img class="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="https://picsum.photos/id/237/300/250" alt="Image Annonce">
+			<div class="flex flex-col justify-between p-4 leading-normal w-full">
+				<h2 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ ad.title}}
+				</h2>
+				<p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ad.price}} €</p>
+				<div class="flex mt-4 space-x-2">
+					<a href="{{ path('user_ad_show', {'id': ad.id}) }}" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+						Modifier
+					</a>
+					<a href="{{ path('user_ad_delete', {'id': ad.id}) }}" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
+						Supprimer
+					</a>
+				</div>
+			</div>
+		</div>
 
-	{{ knp_pagination_render(ads) }}
 
-	<a href="{{ path('user_ad_new') }}">Create new</a>
+	{% else %}
+
+
+		<p>no records found</p>
+	{% endfor %}
+	{{ knp_pagination_render(ads) }}<a href="{{ path('user_ad_new') }}">Create new</a>
 {% endblock %}
