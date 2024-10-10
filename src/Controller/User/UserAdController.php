@@ -4,12 +4,9 @@ namespace App\Controller\User;
 
 use DateTime;
 use App\Entity\Ad;
-use App\Entity\CategorySpecification;
 use App\Form\AdType;
-use App\Form\CategorySpecificationType;
 use App\Repository\AdRepository;
 use App\Repository\CategoryRepository;
-use App\Repository\CategorySpecificationRepository;
 use App\Repository\SubCategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -64,7 +61,7 @@ class UserAdController extends AbstractController
     }
 
     #[Route('/new', name: 'ad_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, CategorySpecificationRepository $categorySpecRepository): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $ad = new Ad();
         $form = $this->createForm(AdType::class, $ad);
