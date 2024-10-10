@@ -31,7 +31,7 @@ class SubCategory
     /**
      * @var Collection<int, CategorySpecification>
      */
-    #[ORM\OneToMany(targetEntity: CategorySpecification::class, mappedBy: 'subcategory')]
+    #[ORM\OneToMany(targetEntity: CategorySpecification::class, mappedBy: 'subCategory')]
     private Collection $categorySpecifications;
 
     public function __construct()
@@ -111,7 +111,7 @@ class SubCategory
     {
         if (!$this->categorySpecifications->contains($categorySpecification)) {
             $this->categorySpecifications->add($categorySpecification);
-            $categorySpecification->setSubcategory($this);
+            $categorySpecification->setSubCategory($this);
         }
 
         return $this;
@@ -121,8 +121,8 @@ class SubCategory
     {
         if ($this->categorySpecifications->removeElement($categorySpecification)) {
             // set the owning side to null (unless already changed)
-            if ($categorySpecification->getSubcategory() === $this) {
-                $categorySpecification->setSubcategory(null);
+            if ($categorySpecification->getSubCategory() === $this) {
+                $categorySpecification->setSubCategory(null);
             }
         }
 

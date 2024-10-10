@@ -3,7 +3,9 @@
 namespace App\Twig\Components;
 
 use App\Entity\Ad;
+use App\Entity\CategorySpecification;
 use App\Form\AdType;
+use App\Form\CategorySpecificationType;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;

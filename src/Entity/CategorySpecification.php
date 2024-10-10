@@ -22,7 +22,7 @@ class CategorySpecification
     private ?bool $isRequired = null;
 
     #[ORM\ManyToOne(inversedBy: 'categorySpecifications')]
-    private ?SubCategory $subcategory = null;
+    private ?SubCategory $subCategory = null;
 
     /**
      * @var Collection<int, AdSpecification>
@@ -64,14 +64,14 @@ class CategorySpecification
         return $this;
     }
 
-    public function getSubcategory(): ?SubCategory
+    public function getSubCategory(): ?SubCategory
     {
-        return $this->subcategory;
+        return $this->subCategory;
     }
 
-    public function setSubcategory(?SubCategory $subcategory): static
+    public function setSubCategory(?SubCategory $subCategory): static
     {
-        $this->subcategory = $subcategory;
+        $this->subCategory = $subCategory;
 
         return $this;
     }
