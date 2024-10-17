@@ -2,7 +2,7 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\CategorySpecification;
+use App\Entity\SpecificationType;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -11,44 +11,53 @@ class CategorySpecificationFixtures extends Fixture implements DependentFixtureI
 {
     public const SPECIFICATIONS = [
         'Voitures' => [
-            ['name' => 'Marque'],
-            ['name' => 'Modèle'],
-            ['name' => 'Kilométrage'],
+            ['name' => 'Marque', 'type' => 'select', 'options' => ['Toyota', 'Peugeot', 'Citroën', 'Renault']],
+            ['name' => 'Modèle', 'type' => 'text'],
+            ['name' => 'Kilométrage', 'type' => 'number'],
+            ['name' => 'Type de carburant', 'type' => 'select', 'options' => ['petrol', 'diesel', 'electric', 'hybrid']],
+            ['name' => 'Transmission', 'type' => 'select', 'options' => ['automatic', 'manual', 'semi-automatic']],
+            ['name' => 'Couleur', 'type' => 'select', 'options' => ['red', 'blue', 'black', 'white', 'grey']],
         ],
         'Motos' => [
-            ['name' => 'Cylindrée'],
-            ['name' => 'Marque'],
+            ['name' => 'Cylindrée', 'type' => 'number'],
+            ['name' => 'Marque', 'type' => 'select', 'options' => ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki']],
         ],
         'Caravaning' => [
-            ['name' => 'Longueur'],
-            ['name' => 'Nombre de couchages'],
+            ['name' => 'Longueur', 'type' => 'number'],
+            ['name' => 'Nombre de couchages', 'type' => 'number'],
         ],
         'Ventes immobilières' => [
-            ['name' => 'Type de bien'],
-            ['name' => 'Surface habitable'],
-            ['name' => 'Nombre de pièces'],
+            ['name' => 'Type de bien', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
+            ['name' => 'Surface habitable', 'type' => 'number'],
+            ['name' => 'Nombre de pièces', 'type' => 'number'],
         ],
         'Locations' => [
-            ['name' => 'Type de bien'],
-            ['name' => 'Surface habitable'],
-            ['name' => 'Ce bien est'],
-            ['name' => 'Nombre de pièces']
+            ['name' => 'Type de bien', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
+            ['name' => 'Surface habitable', 'type' => 'number'],
+            ['name' => 'Ce bien est', 'type' => 'select', 'options' => ['Meublé', 'Non Meublé']],
+            ['name' => 'Nombre de pièces', 'type' => 'number'],
         ],
         'Informatique' => [
-            ['name' => 'Processeur'],
-            ['name' => 'Mémoire vive (RAM)'],
+            ['name' => 'Processeur', 'type' => 'select', 'options' => ['Intel Core i5', 'Intel Core i7', 'AMD Ryzen 5', 'AMD Ryzen 7']],
+            ['name' => 'Mémoire vive (RAM)', 'type' => 'number'],
         ],
     ];
+
     public function load(ObjectManager $manager): void
     {
         foreach (self::SPECIFICATIONS as $subCategoryName => $specifications) {
             foreach ($specifications as $specificationData) {
-                $specification = new CategorySpecification();
-                $specification->setName($specificationData['name']);
-                $specification->setRequired(rand(0, 1));
-                $specification->setSubCategory($this->getReference($subCategoryName));
-                $manager->persist($specification);
-                $this->addReference($subCategoryName . '_' . $specificationData['name'], $specification);
+                $specType = new SpecificationType();
+                $specType->setName($specificationData['name']);
+                $specType->setType($specificationData['type']);
+
+                if (isset($specificationData['options'])) {
+                    $specType->setOptions($specificationData['options']);
+                }
+
+                $specType->setSubCategory($this->getReference($subCategoryName));
+                $manager->persist($specType);
+                $this->addReference($subCategoryName . '_' . $specificationData['name'], $specType);
             }
         }
 

@@ -34,10 +34,17 @@ class SubCategory
     #[ORM\OneToMany(targetEntity: CategorySpecification::class, mappedBy: 'subCategory')]
     private Collection $categorySpecifications;
 
+    /**
+     * @var Collection<int, SpecificationType>
+     */
+    #[ORM\OneToMany(targetEntity: SpecificationType::class, mappedBy: 'subCategory')]
+    private Collection $specificationTypes;
+
     public function __construct()
     {
         $this->ads = new ArrayCollection();
         $this->categorySpecifications = new ArrayCollection();
+        $this->specificationTypes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,6 +130,36 @@ class SubCategory
             // set the owning side to null (unless already changed)
             if ($categorySpecification->getSubCategory() === $this) {
                 $categorySpecification->setSubCategory(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SpecificationType>
+     */
+    public function getSpecificationTypes(): Collection
+    {
+        return $this->specificationTypes;
+    }
+
+    public function addSpecificationType(SpecificationType $specificationType): static
+    {
+        if (!$this->specificationTypes->contains($specificationType)) {
+            $this->specificationTypes->add($specificationType);
+            $specificationType->setSubCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSpecificationType(SpecificationType $specificationType): static
+    {
+        if ($this->specificationTypes->removeElement($specificationType)) {
+            // set the owning side to null (unless already changed)
+            if ($specificationType->getSubCategory() === $this) {
+                $specificationType->setSubCategory(null);
             }
         }
 

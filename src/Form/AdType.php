@@ -38,24 +38,24 @@ class AdType extends AbstractType
                 if ($subCategory === null) {
                     return;
                 }
-                $categorySpecs = $subCategory->getCategorySpecifications();
+
+                $categorySpecs = $this->categorySpecRepository->findBy(['subCategory' => $subCategory]);
+
                 foreach ($categorySpecs as $categorySpec) {
                     $field->add(EntityType::class, [
                         'class' => AdSpecification::class,
-                        'choices' => $categorySpec->getAdSpecifications(),
                         'choice_label' => 'value',
                         'label' => $categorySpec->getName(),
                         'placeholder' => 'Sélectionner une spécification',
                         'multiple' => false,
-                        'mapped' => false
+                        'mapped' => false,
                     ]);
                 }
             })
             ->add('description')
             ->add('price')
             ->add('city')
-            ->add('zipCode')
-        ;
+            ->add('zipCode');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

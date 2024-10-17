@@ -6,64 +6,55 @@ use App\Entity\AdSpecification;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use Faker\Factory as Faker;
 
 class AdSpecificationFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        $faker = Faker::create();
 
-        for ($i = 0; $i < 5; $i++) {
-            $adSpec = new AdSpecification();
-            $adSpec->setAd($this->getReference('Voitures' . $i));
-            $adSpec->setCategorySpecification($this->getReference('Voitures_Marque'));
-            $adSpec->setValue('Toyota');
-            $manager->persist($adSpec);
+        foreach (SubCategoryFixtures::SUBCATEGORIES as $categoryName => $subCategories) {
+            foreach ($subCategories as $subCategoryName) {
+                for ($i = 0; $i < 10; $i++) {
+                    $ad = $this->getReference($subCategoryName . $i);
 
-            $adSpec2 = new AdSpecification();
-            $adSpec2->setAd($this->getReference('Voitures' . $i));
-            $adSpec2->setCategorySpecification($this->getReference('Voitures_Kilométrage'));
-            $adSpec2->setValue(strval(rand(50000, 150000)));
-            $manager->persist($adSpec2);
-        }
+                    $specTypes = $ad->getSubCategory()->getSpecificationTypes();
 
-        for ($i = 0; $i < 5; $i++) {
-            $adSpec3 = new AdSpecification();
-            $adSpec3->setAd($this->getReference('Locations' . $i));
-            $adSpec3->setCategorySpecification($this->getReference('Locations_Surface habitable'));
-            $adSpec3->setValue(strval(rand(30, 100)));
-            $manager->persist($adSpec3);
+                    foreach ($specTypes as $specType) {
+                        $adSpec = new AdSpecification();
+                        $adSpec->setAd($ad);
+                        $adSpec->setSpecificationType($specType);
 
-            $adSpec4 = new AdSpecification();
-            $adSpec4->setAd($this->getReference('Locations' . $i));
-            $adSpec4->setCategorySpecification($this->getReference('Locations_Ce bien est'));
-            $adSpec4->setValue(rand(0, 1) ? 'Meublé' : 'Non Meublé');
-            $manager->persist($adSpec4);
+                        switch ($specType->getType()) {
+                            case 'select':
+                                $options = $specType->getOptions();
+                                $value = $faker->randomElement($options);
+                                break;
 
-            $adSpec5 = new AdSpecification();
-            $adSpec5->setAd($this->getReference('Locations' . $i));
-            $adSpec5->setCategorySpecification($this->getReference('Locations_Type de bien'));
-            $adSpec5->setValue(rand(0, 1) ? 'Appartement' : 'Maison');
-            $manager->persist($adSpec5);
+                            case 'number':
+                                if (strtolower($specType->getName()) === 'kilométrage') {
+                                    $value = (string) $faker->numberBetween(5000, 200000);
+                                } elseif (strtolower($specType->getName()) === 'surface habitable') {
+                                    $value = (string) $faker->numberBetween(20, 200);
+                                } elseif (strtolower($specType->getName()) === 'nombre de pièces') {
+                                    $value = (string) $faker->numberBetween(1, 10);
+                                } else {
+                                    $value = (string) $faker->numberBetween(1, 1000);
+                                }
+                                break;
 
-            $adSpec6 = new AdSpecification();
-            $adSpec6->setAd($this->getReference('Locations' . $i));
-            $adSpec6->setCategorySpecification($this->getReference('Locations_Nombre de pièces'));
-            $adSpec6->setValue(strval(rand(1,5)));
-            $manager->persist($adSpec6);
-        }
+                            case 'text':
+                            default:
+                                $value = $faker->word();
+                                break;
+                        }
 
-        for ($i = 0; $i < 5; $i++) {
-            $adSpec7 = new AdSpecification();
-            $adSpec7->setAd($this->getReference('Informatique' . $i));
-            $adSpec7->setCategorySpecification($this->getReference('Informatique_Processeur'));
-            $adSpec7->setValue('Intel Core i7');
-            $manager->persist($adSpec7);
-
-            $adSpec8 = new AdSpecification();
-            $adSpec8->setAd($this->getReference('Informatique' . $i));
-            $adSpec8->setCategorySpecification($this->getReference('Informatique_Mémoire vive (RAM)'));
-            $adSpec8->setValue(strval(rand(4, 16)));
-            $manager->persist($adSpec8);
+                        $adSpec->setValue($value);
+                        $manager->persist($adSpec);
+                    }
+                }
+            }
         }
 
         $manager->flush();

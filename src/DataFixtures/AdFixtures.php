@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Ad;
+use App\Enum\AdStateEnum;
 use Faker\Factory as Faker;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -23,15 +24,16 @@ class AdFixtures extends Fixture implements DependentFixtureInterface
                         ->setPrice($faker->randomFloat(2, 10, 1000))
                         ->setCreateAt($faker->dateTimeInInterval('-1 year', 'now'))
                         ->setCity($faker->city())
-                        ->setZipCode(rand('00000', '99999'))
+                        ->setZipCode(sprintf('%05d', rand(0, 99999)))
                         ->setSubCategory($this->getReference($subCategoryName))
-                        ->setUser($this->getReference("user_" . rand(1, 5)));
-                    $this->addReference($subCategoryName . $i, $ad);
+                        ->setUser($this->getReference("user_" . rand(1, 5)))
+                        ->setState($faker->randomElement(AdStateEnum::cases()));
+
                     $manager->persist($ad);
+                    $this->addReference($subCategoryName . $i, $ad);
                 }
             }
         }
-
         $manager->flush();
     }
 

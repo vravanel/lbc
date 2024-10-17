@@ -22,6 +22,9 @@ class AdSpecification
     #[ORM\ManyToOne(inversedBy: 'adSpecifications')]
     private ?CategorySpecification $categorySpecification = null;
 
+    #[ORM\ManyToOne(inversedBy: 'adSpecifications')]
+    private ?SpecificationType $specificationType = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class AdSpecification
     public function setCategorySpecification(?CategorySpecification $categorySpecification): static
     {
         $this->categorySpecification = $categorySpecification;
+
+        return $this;
+    }
+
+    public function getSpecificationType(): ?SpecificationType
+    {
+        return $this->specificationType;
+    }
+
+    public function setSpecificationType(?SpecificationType $specificationType): static
+    {
+        $this->specificationType = $specificationType;
 
         return $this;
     }

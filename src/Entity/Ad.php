@@ -2,11 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AdRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Enum\AdStateEnum;
 use Doctrine\DBAL\Types\Types;
+use App\Repository\AdRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: AdRepository::class)]
 class Ad
@@ -56,6 +57,12 @@ class Ad
      */
     #[ORM\OneToMany(targetEntity: AdSpecification::class, mappedBy: 'ad')]
     private Collection $adSpecifications;
+
+    #[ORM\Column(type: 'string', enumType: AdStateEnum::class)]
+    private AdStateEnum $state;
+
+    #[ORM\Column(type: Types::JSON, nullable: true)]
+    private ?array $specifications = null;
 
     public function __construct()
     {
@@ -232,6 +239,30 @@ class Ad
                 $adSpecification->setAd(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getState(): AdStateEnum
+    {
+        return $this->state;
+    }
+
+    public function setState(AdStateEnum $state): self
+    {
+        $this->state = $state;
+
+        return $this;
+    }
+
+    public function getSpecifications(): ?array
+    {
+        return $this->specifications;
+    }
+
+    public function setSpecifications(?array $specifications): self
+    {
+        $this->specifications = $specifications;
 
         return $this;
     }
