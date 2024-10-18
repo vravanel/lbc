@@ -19,27 +19,27 @@ class CategorySpecificationFixtures extends Fixture implements DependentFixtureI
             ['name' => 'Couleur', 'type' => 'text'],
         ],
         'Motos' => [
-            ['name' => 'Cylindrée', 'type' => 'number'],
-            ['name' => 'Marque', 'type' => 'select', 'options' => ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki']],
+            ['name' => 'Cylindree', 'type' => 'number'],
+            ['name' => 'Marque_Moto', 'type' => 'select', 'options' => ['Honda', 'Yamaha', 'Suzuki', 'Kawasaki']],
         ],
         'Caravaning' => [
             ['name' => 'Longueur', 'type' => 'number'],
-            ['name' => 'Nombre de couchages', 'type' => 'number'],
+            ['name' => 'Nombre_de_couchages', 'type' => 'number'],
         ],
         'Ventes immobilières' => [
-            ['name' => 'Type de bien', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
-            ['name' => 'Surface habitable', 'type' => 'number'],
-            ['name' => 'Nombre de pièces', 'type' => 'number'],
+            ['name' => 'Type_de_bien_vente', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
+            ['name' => 'Surface_habitable_vente', 'type' => 'number'],
+            ['name' => 'Nombre_de_pieces_vente', 'type' => 'number'],
         ],
         'Locations' => [
-            ['name' => 'Type de bien', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
-            ['name' => 'Surface habitable', 'type' => 'number'],
-            ['name' => 'Ce bien est', 'type' => 'select', 'options' => ['Meublé', 'Non Meublé']],
-            ['name' => 'Nombre de pièces', 'type' => 'number'],
+            ['name' => 'Type_de_bien', 'type' => 'select', 'options' => ['Appartement', 'Maison']],
+            ['name' => 'Surface_habitable', 'type' => 'number'],
+            ['name' => 'Ce_bien_est', 'type' => 'select', 'options' => ['Meublé', 'Non Meublé']],
+            ['name' => 'Nombre_de_pieces', 'type' => 'number'],
         ],
         'Informatique' => [
             ['name' => 'Processeur', 'type' => 'select', 'options' => ['Intel Core i5', 'Intel Core i7', 'AMD Ryzen 5', 'AMD Ryzen 7']],
-            ['name' => 'Mémoire vive (RAM)', 'type' => 'number'],
+            ['name' => 'Memoire_vive', 'type' => 'number'],
         ],
     ];
 

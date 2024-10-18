@@ -3,9 +3,9 @@
 namespace App\Twig\Components;
 
 use App\Entity\Ad;
-use App\Entity\CategorySpecification;
+use App\Entity\SpecificationType;
 use App\Form\AdType;
-use App\Form\CategorySpecificationType;
+use App\Repository\SpecificationTypeRepository;
 use Symfony\Component\Form\FormInterface;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
@@ -22,11 +22,21 @@ class FormAd extends AbstractController
     #[LiveProp(fieldName: 'formData')]
     public ?Ad $ad;
 
+    #[LiveProp]
+    public ?SpecificationType $specificationsTypes = null;
+
+    public function __construct(private SpecificationTypeRepository $specTypeRepo) {}
+
     protected function instantiateForm(): FormInterface
     {
         return $this->createForm(
             AdType::class,
-            $this->ad
+            $this->ad,
         );
+    }
+
+    public function getAll(): array
+    {
+        return $this->specTypeRepo->findAll();
     }
 }
