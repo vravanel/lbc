@@ -3,21 +3,23 @@
 namespace App\Form;
 
 use App\Entity\Ad;
-use App\Entity\AdSpecification;
-use App\Entity\CategorySpecification;
 use App\Entity\SubCategory;
-use App\Repository\CategorySpecificationRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfonycasts\DynamicForms\DynamicFormBuilder;
 use Symfonycasts\DynamicForms\DependentField;
+use App\Repository\SpecificationTypeRepository;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfonycasts\DynamicForms\DynamicFormBuilder;
+use App\Repository\CategorySpecificationRepository;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class AdType extends AbstractType
 {
-    public function __construct(private CategorySpecificationRepository $categorySpecRepository) {}
+    public function __construct(private SpecificationTypeRepository $specTypeRepository) {}
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -34,23 +36,87 @@ class AdType extends AbstractType
                     'choice_label' => 'name',
                 ]);
             })
-            ->addDependent('adSpecifications', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+            ->addDependent('marque', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
                 if ($subCategory === null) {
                     return;
                 }
 
-                $categorySpecs = $this->categorySpecRepository->findBy(['subCategory' => $subCategory]);
-
-                foreach ($categorySpecs as $categorySpec) {
-                    $field->add(EntityType::class, [
-                        'class' => AdSpecification::class,
-                        'choice_label' => 'value',
-                        'label' => $categorySpec->getName(),
-                        'placeholder' => 'Sélectionner une spécification',
-                        'multiple' => false,
-                        'mapped' => false,
-                    ]);
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Marque']);
+                $field->add(ChoiceType::class, [
+                    'choices' => array_combine($specificationType->getOptions(), $specificationType->getOptions()),
+                    'label' => $specificationType->getName(),
+                    'placeholder' => 'Sélectionner une spécification',
+                    'multiple' => false,
+                    'expanded' => false,
+                    'mapped' => false,
+                ]);
+            })
+            ->addDependent('modele', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+                if ($subCategory === null) {
+                    return;
                 }
+
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Modele']);
+                $field->add(TextType::class, [
+                    'label' => $specificationType->getName(),
+                    'mapped' => false,
+                ]);
+            })
+
+            ->addDependent('kilometrage', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+                if ($subCategory === null) {
+                    return;
+                }
+
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Kilometrage']);
+                $field->add(NumberType::class, [
+                    'label' => $specificationType->getName(),
+                    'mapped' => false,
+                ]);
+            })
+
+            ->addDependent('carburant', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+                if ($subCategory === null) {
+                    return;
+                }
+
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Carburant']);
+                $field->add(ChoiceType::class, [
+                    'choices' => array_combine($specificationType->getOptions(), $specificationType->getOptions()),
+                    'label' => $specificationType->getName(),
+                    'placeholder' => 'Sélectionner un type de carburant',
+                    'multiple' => false,
+                    'expanded' => false,
+                    'mapped' => false,
+                ]);
+            })
+
+            ->addDependent('transmission', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+                if ($subCategory === null) {
+                    return;
+                }
+
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Transmission']);
+                $field->add(ChoiceType::class, [
+                    'choices' => array_combine($specificationType->getOptions(), $specificationType->getOptions()),
+                    'label' => $specificationType->getName(),
+                    'placeholder' => 'Sélectionner une transmission',
+                    'multiple' => false,
+                    'expanded' => false,
+                    'mapped' => false,
+                ]);
+            })
+
+            ->addDependent('couleur', 'subCategory', function (DependentField $field, ?SubCategory $subCategory) {
+                if ($subCategory === null) {
+                    return;
+                }
+
+                $specificationType = $this->specTypeRepository->findOneBy(['subCategory' => $subCategory, 'name' => 'Couleur']);
+                $field->add(TextType::class, [
+                    'label' => $specificationType->getName(),
+                    'mapped' => false,
+                ]);
             })
             ->add('description')
             ->add('price')

@@ -12,13 +12,47 @@
 
 	{% endif %}
 
-	{% if form.adSpecifications is defined %}
+	{% if form.marque is defined %}
 		<div>
-			{{form_row(form.adSpecifications, {'placeholder' : 'test', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+			{{form_label(form.marque, 'Marque', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.marque, {'placeholder' : 'Choisir la marque', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
 		</div>
-
 	{% endif %}
 
+	{% if form.modele is defined %}
+		<div>
+			{{form_label(form.modele, 'Modèle', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.modele, {'placeholder' : 'Peugeot 107', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+		</div>
+	{% endif %}
+
+	{% if form.kilometrage is defined %}
+		<div>
+			{{form_label(form.kilometrage, 'Kilomètrage', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.kilometrage, {'placeholder' : '102 000', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+		</div>
+	{% endif %}
+
+	{% if form.carburant is defined %}
+		<div>
+			{{form_label(form.carburant, 'Carburant', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.carburant, {'placeholder' : 'Choisir le carburant', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+		</div>
+	{% endif %}
+
+	{% if form.transmission is defined %}
+		<div>
+			{{form_label(form.transmission, 'Transmission', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.transmission, {'placeholder' : 'Choisir la transmission', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+		</div>
+	{% endif %}
+
+	{% if form.couleur is defined %}
+		<div>
+			{{form_label(form.couleur, 'Couleur', {'label_attr': {'class': 'block mb-2 text-sm font-medium text-gray-900 dark:text-white'}})}}
+			{{form_widget(form.couleur, {'placeholder' : 'Noir', 'attr': {'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'}})}}
+		</div>
+	{% endif %}
 
 	<div class="grid gap-6 mb-6 md:grid-cols-2">
 		<div>

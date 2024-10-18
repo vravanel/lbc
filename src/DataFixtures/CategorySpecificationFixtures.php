@@ -12,11 +12,11 @@ class CategorySpecificationFixtures extends Fixture implements DependentFixtureI
     public const SPECIFICATIONS = [
         'Voitures' => [
             ['name' => 'Marque', 'type' => 'select', 'options' => ['Toyota', 'Peugeot', 'Citroën', 'Renault']],
-            ['name' => 'Modèle', 'type' => 'text'],
-            ['name' => 'Kilométrage', 'type' => 'number'],
-            ['name' => 'Type de carburant', 'type' => 'select', 'options' => ['petrol', 'diesel', 'electric', 'hybrid']],
-            ['name' => 'Transmission', 'type' => 'select', 'options' => ['automatic', 'manual', 'semi-automatic']],
-            ['name' => 'Couleur', 'type' => 'select', 'options' => ['red', 'blue', 'black', 'white', 'grey']],
+            ['name' => 'Modele', 'type' => 'text'],
+            ['name' => 'Kilometrage', 'type' => 'number'],
+            ['name' => 'Carburant', 'type' => 'select', 'options' => ['essence', 'diesel', 'electrique', 'hybridre']],
+            ['name' => 'Transmission', 'type' => 'select', 'options' => ['automatique', 'manualle', 'semi-automatique']],
+            ['name' => 'Couleur', 'type' => 'text'],
         ],
         'Motos' => [
             ['name' => 'Cylindrée', 'type' => 'number'],
