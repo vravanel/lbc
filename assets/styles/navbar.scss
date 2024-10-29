@@ -1,0 +1,72 @@
+.navbar {
+    width: 60%;
+
+    &_logo {
+        width: 10rem;
+    }
+
+    &_collapse_link {
+        display: flex;
+        border-radius: 16px;
+        width: 14rem;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        background-color: $primary;
+        color: white;
+        border: none;
+    &:hover {
+        background-color: #F07B42;
+    }
+    & > svg {
+        width: 1.25rem;
+        margin-right: .5rem;
+    }  
+    
+    }
+
+    &_icon {
+        width: 1.5rem;
+    }
+
+    &_list_a {
+        color: black;
+        text-decoration: none; 
+        font-size: .75rem;
+
+        &:hover {
+            border-bottom: 2px solid $primary; 
+        }
+    }
+    
+}
+
+.search-form {
+    width: 18rem;
+    & > .position-relative  {
+        width: 100%;
+        position: relative;
+
+        & > input {
+            background-color: #F0F2F5;
+            border-radius:  1rem;
+            padding: 0.65rem;
+        }
+        & > button {
+            position: absolute;
+            background-color: $primary;
+            color: white;
+            border: none;
+            width: 2.5rem;
+            border-radius: 0.75rem;
+            right: 0.5rem;
+            top: 18%;
+
+          &:hover {
+            background-color: #F07B42;
+          }         
+        }
+    }
+
+   
+}

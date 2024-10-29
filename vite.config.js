@@ -6,29 +6,21 @@ import CustomHmr from "./custom-hmr";
 // import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-    server: {
-        host: "0.0.0.0",
+  server: {
+    host: "0.0.0.0",
+  },
+  plugins: [
+    symfonyPlugin({
+      stimulus: true,
+      viteDevServerHostname: "localhost",
+    }),
+    CustomHmr(),
+  ],
+  build: {
+    rollupOptions: {
+      input: {
+        app: "./assets/app.js",
       },
-    plugins: [
-        /* react(), // if you're using React */
-        symfonyPlugin({
-            stimulus: true,
-            viteDevServerHostname: "localhost",
-        }),
-        CustomHmr(),
-    ],
-    build: {
-        rollupOptions: {
-            input: {
-                app: "./assets/app.js",
-            },
-        }
     },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                quietDeps: true,
-            }
-        }
-    }
+  },
 });
