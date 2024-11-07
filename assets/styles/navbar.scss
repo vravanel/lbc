@@ -1,5 +1,7 @@
 .navbar {
     width: 60%;
+    display: flex;
+    flex-direction: column;
 
     &_logo {
         width: 10rem;
@@ -69,4 +71,50 @@
     }
 
    
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item:hover .dropdown-menu-container {
+    display: block;
+}
+
+.dropdown-menu-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 500%;
+}
+
+.divider {
+    height: 2px;
+    width: 100vw; 
+    border-bottom: 1px solid #ACB8C7;
+}
+
+.dropdown-menu {
+    display: flex;
+    width: 150%;
+    border: none;
+}
+
+.dropdown-menu .col-4 {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu .col-8 .dropdown-item {
+    color: #000;
+    background-color: #fff;
+}
+
+.point {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    background-color: #ACB8C7;
+    margin-left: 1rem;
+    
 }
