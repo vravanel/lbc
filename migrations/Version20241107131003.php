@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241107092743 extends AbstractMigration
+final class Version20241107131003 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -32,6 +32,7 @@ final class Version20241107092743 extends AbstractMigration
         $this->addSql('ALTER TABLE center_of_interest_user ADD CONSTRAINT FK_A4EDA97CA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE other_info ADD CONSTRAINT FK_A2CD6785A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE personal_info ADD CONSTRAINT FK_FA83366AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE user ADD username VARCHAR(255) DEFAULT NULL, DROP pseudo, CHANGE phone phone VARCHAR(20) DEFAULT NULL, CHANGE created_at created_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE updated_at updated_at DATETIME DEFAULT NULL COMMENT \'(DC2Type:datetime_immutable)\'');
     }
 
     public function down(Schema $schema): void
@@ -49,5 +50,6 @@ final class Version20241107092743 extends AbstractMigration
         $this->addSql('DROP TABLE center_of_interest_user');
         $this->addSql('DROP TABLE other_info');
         $this->addSql('DROP TABLE personal_info');
+        $this->addSql('ALTER TABLE user ADD pseudo VARCHAR(100) NOT NULL, DROP username, CHANGE phone phone VARCHAR(20) NOT NULL, CHANGE created_at created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', CHANGE updated_at updated_at DATETIME DEFAULT NULL');
     }
 }
