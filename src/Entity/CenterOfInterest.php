@@ -21,13 +21,13 @@ class CenterOfInterest
     /**
      * @var Collection<int, User>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'centerOfInterests')]
-    private Collection $user;
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'centerOfInterest')]
+    private Collection $users;
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
-    }
+        $this->users = new ArrayCollection();
+    }    
 
     public function getId(): ?int
     {
@@ -49,15 +49,16 @@ class CenterOfInterest
     /**
      * @return Collection<int, User>
      */
-    public function getUser(): Collection
+    public function getUsers(): Collection
     {
-        return $this->user;
+        return $this->users;
     }
 
     public function addUser(User $user): static
     {
-        if (!$this->user->contains($user)) {
-            $this->user->add($user);
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addCenterOfInterest($this);
         }
 
         return $this;
@@ -65,8 +66,11 @@ class CenterOfInterest
 
     public function removeUser(User $user): static
     {
-        $this->user->removeElement($user);
+        if ($this->users->removeElement($user)) {
+            $user->removeCenterOfInterest($this);
+        }
 
         return $this;
-    }
+    }   
+    
 }

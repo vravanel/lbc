@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column(nullable: true)]
@@ -45,18 +45,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    /**
-     * @var Collection<int, Ad>
-     */
-    #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'user', orphanRemoval: true)]
-    private Collection $ads;
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?PersonalInfo $userProfile = null;
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Avatar $avatar = null;
+
+    /**
+     * @var Collection<int, CenterOfInterest>
+     */
+    #[ORM\ManyToMany(targetEntity: CenterOfInterest::class, inversedBy: 'users')]
+    private Collection $centerOfInterest;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?OtherInfo $otherInfo = null;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?PersonalInfo $personalInfo = null;
 
     public function __construct()
     {
-        $this->ads = new ArrayCollection();
+        $this->centerOfInterest = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -182,54 +191,74 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Avatar $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, Ad>
+     * @return Collection<int, CenterOfInterest>
      */
-    public function getAds(): Collection
+    public function getCenterOfInterest(): Collection
     {
-        return $this->ads;
+        return $this->centerOfInterest;
     }
 
-    public function addAd(Ad $ad): static
+    public function addCenterOfInterest(CenterOfInterest $centerOfInterest): static
     {
-        if (!$this->ads->contains($ad)) {
-            $this->ads->add($ad);
-            $ad->setUser($this);
+        if (!$this->centerOfInterest->contains($centerOfInterest)) {
+            $this->centerOfInterest->add($centerOfInterest);
         }
 
         return $this;
     }
 
-    public function removeAd(Ad $ad): static
+    public function removeCenterOfInterest(CenterOfInterest $centerOfInterest): static
     {
-        if ($this->ads->removeElement($ad)) {
-            // set the owning side to null (unless already changed)
-            if ($ad->getUser() === $this) {
-                $ad->setUser(null);
-            }
-        }
+        $this->centerOfInterest->removeElement($centerOfInterest);
 
         return $this;
     }
 
-    public function getUserProfile(): ?PersonalInfo
+    public function getOtherInfo(): ?OtherInfo
     {
-        return $this->userProfile;
+        return $this->otherInfo;
     }
 
-    public function setUserProfile(?PersonalInfo $userProfile): static
+    public function setOtherInfo(?OtherInfo $otherInfo): static
     {
-        // unset the owning side of the relation if necessary
-        if ($userProfile === null && $this->userProfile !== null) {
-            $this->userProfile->setUser(null);
-        }
+        $this->otherInfo = $otherInfo;
 
-        // set the owning side of the relation if necessary
-        if ($userProfile !== null && $userProfile->getUser() !== $this) {
-            $userProfile->setUser($this);
-        }
+        return $this;
+    }
 
-        $this->userProfile = $userProfile;
+    public function getPersonalInfo(): ?PersonalInfo
+    {
+        return $this->personalInfo;
+    }
+
+    public function setPersonalInfo(?PersonalInfo $personalInfo): static
+    {
+        $this->personalInfo = $personalInfo;
 
         return $this;
     }

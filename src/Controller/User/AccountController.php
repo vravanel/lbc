@@ -2,10 +2,11 @@
 
 namespace App\Controller\User;
 
-use App\Entity\PersonalInfo;
 use App\Entity\User;
 use App\Entity\UserProfile;
+use App\Entity\PersonalInfo;
 use App\Form\UserProfileType;
+use App\Form\PersonalInfoType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class AccountController extends AbstractController
         }
 
         // Formulaire principal avec sous-formulaires
-        $form = $this->createForm(UserProfileType::class, $personalInfo);
+        $form = $this->createForm(PersonalInfoType::class, $personalInfo);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
