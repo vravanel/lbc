@@ -33,14 +33,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $firtname = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $lastname = null;
-
-    #[ORM\Column(length: 80)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $phone = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * @var Collection<int, Ad>
@@ -49,7 +52,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $ads;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?UserProfile $userProfile = null;
+    private ?PersonalInfo $userProfile = null;
 
     public function __construct()
     {
@@ -131,38 +134,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirtname(): ?string
-    {
-        return $this->firtname;
-    }
-
-    public function setFirtname(string $firtname): static
-    {
-        $this->firtname = $firtname;
-
-        return $this;
-    }
-
-    public function getLastname(): ?string
-    {
-        return $this->lastname;
-    }
-
-    public function setLastname(string $lastname): static
-    {
-        $this->lastname = $lastname;
-
-        return $this;
-    }
-
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): static
+    public function setUsername(?string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
@@ -197,12 +212,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserProfile(): ?UserProfile
+    public function getUserProfile(): ?PersonalInfo
     {
         return $this->userProfile;
     }
 
-    public function setUserProfile(?UserProfile $userProfile): static
+    public function setUserProfile(?PersonalInfo $userProfile): static
     {
         // unset the owning side of the relation if necessary
         if ($userProfile === null && $this->userProfile !== null) {
