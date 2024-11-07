@@ -8,6 +8,7 @@ use App\Entity\PersonalInfo;
 use App\Form\UserProfileType;
 use App\Form\PersonalInfoType;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Mapping\Id;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -47,7 +48,7 @@ class AccountController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('account_parameter');
+            return $this->redirectToRoute('account_parameter', [id: ]);
         }
 
         return $this->render('user/parameter.html.twig', [

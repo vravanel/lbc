@@ -1,0 +1,120 @@
+.navbar {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+
+    &_logo {
+        width: 10rem;
+    }
+
+    &_collapse_link {
+        display: flex;
+        border-radius: 16px;
+        width: 14rem;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        font-weight: 700;
+        background-color: $primary;
+        color: white;
+        border: none;
+    &:hover {
+        background-color: #F07B42;
+    }
+    & > svg {
+        width: 1.25rem;
+        margin-right: .5rem;
+    }  
+    
+    }
+
+    &_icon {
+        width: 1.5rem;
+    }
+
+    &_list_a {
+        color: black;
+        text-decoration: none; 
+        font-size: .75rem;
+
+        &:hover {
+            border-bottom: 2px solid $primary; 
+        }
+    }
+    
+}
+
+.search-form {
+    width: 18rem;
+    & > .position-relative  {
+        width: 100%;
+        position: relative;
+
+        & > input {
+            background-color: #F0F2F5;
+            border-radius:  1rem;
+            padding: 0.65rem;
+        }
+        & > button {
+            position: absolute;
+            background-color: $primary;
+            color: white;
+            border: none;
+            width: 2.5rem;
+            border-radius: 0.75rem;
+            right: 0.5rem;
+            top: 18%;
+
+          &:hover {
+            background-color: #F07B42;
+          }         
+        }
+    }
+
+   
+}
+
+.nav-item {
+    position: relative;
+}
+
+.nav-item:hover .dropdown-menu-container {
+    display: block;
+}
+
+.dropdown-menu-container {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    display: none;
+    width: 500%;
+}
+
+.divider {
+    height: 2px;
+    width: 100vw; 
+    border-bottom: 1px solid #ACB8C7;
+}
+
+.dropdown-menu {
+    display: flex;
+    width: 150%;
+    border: none;
+}
+
+.dropdown-menu .col-4 {
+    background-color: #f0f0f0;
+}
+
+.dropdown-menu .col-8 .dropdown-item {
+    color: #000;
+    background-color: #fff;
+}
+
+.point {
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    background-color: #ACB8C7;
+    margin-left: 1rem;
+    
+}
