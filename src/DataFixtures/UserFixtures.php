@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
+use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -17,9 +18,9 @@ class UserFixtures extends Fixture
             $user->setEmail("user" . $i . "@test.com");
             $user->setPassword($this->passwordHasher->hashPassword($user, 'test'));
             $user->setRoles(["ROLE_USER"]);
-            $user->setFirtname("user " . $i);
-            $user->setLastname("user " . $i);
+            $user->setPhone($i * 1000000000);
             $user->setUsername("pseudo " . $i);
+            $user->setCreatedAt(new \DateTimeImmutable());
             $this->addReference("user_" . $i, $user);
             $manager->persist($user);
         }
@@ -28,9 +29,9 @@ class UserFixtures extends Fixture
         $admin->setEmail("admin@test.com");
         $admin->setPassword($this->passwordHasher->hashPassword($admin, 'test'));
         $admin->setRoles(["ROLE_ADMIN"]);
-        $admin->setFirtname("admin");
-        $admin->setLastname("admin");
+        $admin->setPhone('0555555555');
         $admin->setUsername("pseudo");
+        $admin->setCreatedAt(new \DateTimeImmutable());
         $manager->persist($admin);
 
         $manager->flush();
