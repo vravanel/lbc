@@ -17,7 +17,7 @@ class Address
     private ?string $address = null;
 
     #[ORM\OneToOne(mappedBy: 'address', cascade: ['persist', 'remove'])]
-    private ?User $user = null;    
+    private ?User $user = null;
 
     public function getId(): ?int
     {

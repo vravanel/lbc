@@ -5,16 +5,36 @@
 {% block body %}
     <h1>Modifier mon profil</h1>
 
-    {# Formulaire principal #}
-    {{ form_start(form) }}
+    {# Formulaire Informations Personnelles #}
+{{ form_start(formPI) }}
+    {{ form_widget(formPI) }}
+    <button type="submit">Enregistrer les informations personnelles</button>
+{{ form_end(formPI) }}
 
-    <div class="personal-info-section">
-        <h3>Informations Personnelles</h3>
-        {{ form_row(form.civility) }}
-        {{ form_row(form.lastname) }}
-        {{ form_row(form.firstname) }}
-        {{ form_row(form.dateOfBirth) }}
-        
+{# Formulaire Adresse #}
+{{ form_start(formAddress) }}
+    {{ form_widget(formAddress) }}  
+    <button type="submit">Enregistrer l'adresse</button>
+{{ form_end(formAddress) }}
+
+{# Formulaire Centres d'Intérêt #}
+{{ form_start(formInterest) }}
+<div class="interest-choices">
+    {{ form_widget(formInterest) }}
     </div>
-    {{ form_end(form) }}
+    <button type="submit" class="btn btn-primary">Enregistrer les centres d'intérêt</button>
+{{ form_end(formInterest) }}
+
+{# Formulaire Autres Informations #}
+{{ form_start(formOtherInfo) }}
+    {{ form_widget(formOtherInfo) }}
+    <button type="submit">Enregistrer les autres informations</button>
+{{ form_end(formOtherInfo) }}
+
+{# Formulaire Email #}
+{{ form_start(formEmail) }}
+    {{ form_widget(formEmail) }}
+    <button type="submit">Enregistrer l'email</button>
+{{ form_end(formEmail) }}
+
 {% endblock %}
