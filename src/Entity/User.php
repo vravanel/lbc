@@ -63,9 +63,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
     private ?PersonalInfo $personalInfo = null;
 
+    #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'user', orphanRemoval: true)]
+    private Collection $ads;
+
     public function __construct()
     {
         $this->centerOfInterest = new ArrayCollection();
+        $this->ads = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -235,6 +239,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeCenterOfInterest(CenterOfInterest $centerOfInterest): static
     {
         $this->centerOfInterest->removeElement($centerOfInterest);
+
+        return $this;
+    }
+
+    public function getAds(): Collection
+    {
+        return $this->ads;
+    }
+
+    public function addAd(Ad $ad): static
+    {
+        if (!$this->ads->contains($ad)) {
+            $this->ads->add($ad);
+            $ad->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAd(Ad $ad): static
+    {
+        if ($this->ads->removeElement($ad)) {
+            // set the owning side to null (unless already changed)
+            if ($ad->getUser() === $this) {
+                $ad->setUser(null);
+            }
+        }
 
         return $this;
     }

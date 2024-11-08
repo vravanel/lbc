@@ -1,0 +1,13 @@
+<div{{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+        'data-action': 'live#action:prevent',
+        'data-live-action-param': 'save'
+    }
+}) }}
+    {{ form_widget(form) }}
+    <button type="submit">Save</button>
+    {{ form_end(form) }}
+
+</div>
+
