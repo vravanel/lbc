@@ -17,15 +17,14 @@ class AccountController extends AbstractController
 {
     #[IsGranted('ROLE_USER')]
     #[Route('/{id}', name: '_index')]
-    public function index(PersonalInfo $userProfile): Response
+    public function index(PersonalInfo $personalInfo,): Response
     {
-        // Vérifier si l'utilisateur est connecté et correspond à son profil
-        if (!$this->getUser() || $userProfile->getUser() !== $this->getUser()) {
+        if (!$this->getUser() || $personalInfo->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('app_home');
         }
 
         return $this->render('user/index.html.twig', [
-            'userProfile' => $userProfile,
+            'personalInfo' => $personalInfo
         ]);
     }
 

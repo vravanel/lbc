@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Twig\Components;
+namespace App\Twig\Components\AccountParameter;
 
 use App\Entity\User;
 use App\Entity\PersonalInfo;
 use App\Form\PersonalInfoType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\Security\Core\Security;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
