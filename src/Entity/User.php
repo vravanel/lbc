@@ -36,7 +36,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $username = null;
 
-    #[ORM\Column(length: 20, nullable: true)]
+    #[ORM\Column(length: 10, nullable: true)]
     private ?string $phone = null;
 
     #[ORM\Column(nullable: true)]
@@ -45,14 +45,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?Avatar $avatar = null;
+
     /**
-     * @var Collection<int, Ad>
+     * @var Collection<int, CenterOfInterest>
      */
+    #[ORM\ManyToMany(targetEntity: CenterOfInterest::class, inversedBy: 'users')]
+    private Collection $centerOfInterest;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?OtherInfo $otherInfo = null;
+
+    #[ORM\OneToOne(inversedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?PersonalInfo $personalInfo = null;
+
     #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $ads;
 
     public function __construct()
     {
+        $this->centerOfInterest = new ArrayCollection();
         $this->ads = new ArrayCollection();
     }
 
@@ -179,9 +195,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    public function getAvatar(): ?Avatar
+    {
+        return $this->avatar;
+    }
+
+    public function setAvatar(?Avatar $avatar): static
+    {
+        $this->avatar = $avatar;
+
+        return $this;
+    }
+
     /**
-     * @return Collection<int, Ad>
+     * @return Collection<int, CenterOfInterest>
      */
+    public function getCenterOfInterest(): Collection
+    {
+        return $this->centerOfInterest;
+    }
+
+    public function addCenterOfInterest(CenterOfInterest $centerOfInterest): static
+    {
+        if (!$this->centerOfInterest->contains($centerOfInterest)) {
+            $this->centerOfInterest->add($centerOfInterest);
+        }
+
+        return $this;
+    }
+
+    public function removeCenterOfInterest(CenterOfInterest $centerOfInterest): static
+    {
+        $this->centerOfInterest->removeElement($centerOfInterest);
+
+        return $this;
+    }
+
     public function getAds(): Collection
     {
         return $this->ads;
@@ -205,6 +266,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $ad->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOtherInfo(): ?OtherInfo
+    {
+        return $this->otherInfo;
+    }
+
+    public function setOtherInfo(?OtherInfo $otherInfo): static
+    {
+        $this->otherInfo = $otherInfo;
+
+        return $this;
+    }
+
+    public function getPersonalInfo(): ?PersonalInfo
+    {
+        return $this->personalInfo;
+    }
+
+    public function setPersonalInfo(?PersonalInfo $personalInfo): static
+    {
+        $this->personalInfo = $personalInfo;
 
         return $this;
     }

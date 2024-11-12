@@ -25,8 +25,8 @@ class PersonalInfo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $dateOfBirth = null;
 
-    #[ORM\OneToOne(inversedBy: 'personalInfo', cascade: ['persist', 'remove'])]
-    private ?User $user = null;
+    #[ORM\OneToOne(mappedBy: 'personalInfo', cascade: ['persist', 'remove'])]
+    private ?User $user = null;   
 
     public function getId(): ?int
     {
@@ -88,6 +88,16 @@ class PersonalInfo
 
     public function setUser(?User $user): static
     {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setPersonalInfo(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getPersonalInfo() !== $this) {
+            $user->setPersonalInfo($this);
+        }
+
         $this->user = $user;
 
         return $this;

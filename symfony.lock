@@ -300,7 +300,7 @@
         ]
     },
     "symfony/ux-live-component": {
-        "version": "2.20",
+        "version": "2.21",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
@@ -310,9 +310,6 @@
         "files": [
             "./config/routes/ux_live_component.yaml"
         ]
-    },
-    "symfony/ux-turbo": {
-        "version": "v2.19.3"
     },
     "symfony/ux-twig-component": {
         "version": "2.19",

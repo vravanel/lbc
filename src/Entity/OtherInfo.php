@@ -16,8 +16,8 @@ class OtherInfo
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $categorySocioprofessional = null;
 
-    #[ORM\OneToOne(inversedBy: 'otherInfo', cascade: ['persist', 'remove'])]
-    private ?User $user = null;
+    #[ORM\OneToOne(mappedBy: 'otherInfo', cascade: ['persist', 'remove'])]
+    private ?User $user = null;    
 
     public function getId(): ?int
     {
@@ -43,8 +43,19 @@ class OtherInfo
 
     public function setUser(?User $user): static
     {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setOtherInfo(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getOtherInfo() !== $this) {
+            $user->setOtherInfo($this);
+        }
+
         $this->user = $user;
 
         return $this;
     }
+    
 }

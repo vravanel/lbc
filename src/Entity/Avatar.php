@@ -22,9 +22,9 @@ class Avatar
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $uploadedAt = null;
 
-    #[ORM\OneToOne(inversedBy: 'avatar', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'avatar', cascade: ['persist', 'remove'])]
     private ?User $user = null;
-
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -73,8 +73,19 @@ class Avatar
 
     public function setUser(?User $user): static
     {
+        // unset the owning side of the relation if necessary
+        if ($user === null && $this->user !== null) {
+            $this->user->setAvatar(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($user !== null && $user->getAvatar() !== $this) {
+            $user->setAvatar($this);
+        }
+
         $this->user = $user;
 
         return $this;
-    }
+    }   
+    
 }
