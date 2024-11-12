@@ -3,7 +3,7 @@
         "@symfony/ux-live-component": {
             "live": {
                 "enabled": true,
-                "fetch": "lazy",
+                "fetch": "eager",
                 "autoimport": {
                     "@symfony/ux-live-component/dist/live.min.css": true
                 }
