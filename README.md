@@ -10,6 +10,11 @@ Pour démarrer l'application en mode watch :
 HTTP_PORT=8000 docker compose up --pull always -d --wait
 ```
 
+Pour démarrer le serveur vite.js : 
+```bash
+docker run --rm -ti --user $(id -u):$(id -g) -v $(pwd):/app -p 5173:5173 -w /app node:21-alpine npm run dev
+```
+
 ### Pour voir les logs :
 
 ```bash
