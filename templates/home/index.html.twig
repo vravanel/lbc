@@ -5,7 +5,16 @@
 
 {% block body %}
 
-	<h2>Top catégories</h2>
+	<div class="card-new-ad">
+		<img src="{{ asset('assets/images/left-ornament.svg') }}" alt="Left Ornament" class="left-ornament"/>
+		<p>C'est le moment de vendre</p>
+		<a href="#" class="btn btn-outline-primary navbar_collapse_link me-5">
+			{{ ux_icon('basil:add-outline') }}
+			Déposer une annonce
+		</a>
+		<img src="{{ asset('assets/images/right-ornament.svg') }}" alt="Right Ornament" class="right-ornament"/>
+	</div>
+	<h2 class="title-h2">Top catégories</h2>
 
 	<div class="swiper mySwiper">
 		<div class="swiper-wrapper">
@@ -22,4 +31,53 @@
 		<div class="swiper-button-next"></div>
 	</div>
 
+	<h2 class="title-h2">En ce moment sur LebonCoin</h2>
+
+	{% for subCategory in subCategories %}
+		<div class="section-ad">
+			<h3 class="title-category">{{ subCategory.name }}</h3>
+			<a href="#">
+				Voir plus d'annonces
+				{{ ux_icon('icons8:right-arrow', {class: "icon-arrow"}) }}</a>
+		</div>
+		<div class="swiper mySwiper">
+			<div class="swiper-wrapper">
+				{% for ad in subCategory.ads %}
+					<div class="swiper-slide d-flex flex-column">
+						<div class="user-info d-flex align-items-center gap-2">
+							<div class="user-initial d-flex align-items-center justify-content-center">
+								{{ ad.user.username | slice(0, 1) }}
+							</div>
+							<p class="mb-0">{{ ad.user.username }}</p>
+						</div>
+						<a href="#">
+							<div class="image-container">
+								<img src="https://picsum.photos/id/{{ ad.id }}/190/237" alt="{{ ad.title }}" class="slide-image">
+								<div class="container-icon-heart">
+									{{ ux_icon('ph:heart-bold', {class: "icon-heart"}) }}
+								</div>
+							</div>
+							<div class="slide-text slide-text-2">
+								<p>{{ ad.title }}</p>
+								<p>{{ ad.price }}
+									€</p>
+							</div>
+							<div class="mt-auto">
+								<div class="slide-delivery-box d-inline-flex align-items-center justify-content-start gap-2 rounded-5 text-dark">
+									Livraison possible
+								</div>
+								<div class="slide-info d-inline-flex align-items-center justify-content-start gap-2 rounded-5 text-dark">
+									<div>{{ ad.city }}
+										{{ ad.zipCode }}</div>
+									<div>{{ ad.createAt | date("m/d/Y H:i", "Europe/Paris") }}</div>
+								</div>
+							</div>
+						</a>
+					</div>
+				{% endfor %}
+			</div>
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div>
+		</div>
+	{% endfor %}
 {% endblock %}

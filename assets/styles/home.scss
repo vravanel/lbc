@@ -1,0 +1,33 @@
+.title-h2 {
+    font-size: 1.3rem;
+    color: #152233;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
+.title-category {
+    font-size: 1.12rem;
+    color: #152233;
+    font-weight: 700;
+    margin-top: 2rem;
+}
+
+.user-info {
+    margin-top: 2rem;
+    margin-bottom: .7rem;
+    .user-initial {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: grey;
+        color: white;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    & > p {
+        font-weight: 700;
+    }
+}

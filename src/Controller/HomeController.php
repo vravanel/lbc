@@ -16,5 +16,4 @@ class HomeController extends AbstractController
             'subCategories' => $subCategoriesRepository->findAll(),
         ]);
     }
-
 }
