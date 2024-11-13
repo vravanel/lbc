@@ -8,4 +8,5 @@ import "./bootstrap.js";
 
 import './styles/app.scss'; 
 import 'bootstrap';
+import './swiper.js';
 console.log("Happy coding !!");

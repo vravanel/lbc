@@ -1,80 +1,25 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!
+{% block title %}LebonCoin
 {% endblock %}
 
 {% block body %}
 
-	<h2>Catégorie test</h2>
-	<ul>
-		{% for subCategory in subCategories %}
+	<h2>Top catégories</h2>
 
-			<li>
-				<a href="{{path('subCategory_show', {subCategory : subCategory.id})}}">{{subCategory.name}}</a>
-			</li>
-		{% endfor %}
-	</ul>
-
-
-	<div
-		id="carousel-container" class="relative w-full overflow-hidden">
-		<!-- Carousel wrapper -->
-		<div
-			id="carousel-wrapper" class="flex duration-700 ease-in-out">
-			<!-- Item 1 -->
-			<div class="flex-shrink-0 w-1/4" >
-				<img src="https://picsum.photos/200/300" class="w-full h-full object-cover" alt="...">
-				<h1 class="z-10">test</h1>
-			</div>
-			<!-- Item 2 -->
-			<div class="flex-shrink-0 w-1/4">
-				<img src="https://picsum.photos/200/300" class="w-full h-full object-cover" alt="...">
-			</div>
-			<!-- Item 3 -->
-			<div class="flex-shrink-0 w-1/4">
-				<img src="https://picsum.photos/200/300" class="w-full h-full object-cover" alt="...">
-			</div>
-			<!-- Item 4 -->
-			<div class="flex-shrink-0 w-1/4">
-				<img src="https://picsum.photos/200/300" class="w-full h-full object-cover" alt="...">
-			</div>
-			<!-- Item 5 -->
-			<div class="flex-shrink-0 w-1/4">
-				<img src="https://picsum.photos/200/300" class="w-full h-full object-cover" alt="...">
-			</div>
+	<div class="swiper mySwiper">
+		<div class="swiper-wrapper">
+			{% for subCategory in subCategories %}
+				<div class="swiper-slide">
+					<a href="{{path('subCategory_show', {subCategory : subCategory.id})}}">
+						<img src="https://picsum.photos/id/{{ subCategory.id }}/180/120" alt="{{ subCategory.name }}" class="slide-image">
+						<div class="slide-text">{{ subCategory.name }}</div>
+					</a>
+				</div>
+			{% endfor %}
 		</div>
-
-		<!-- Controls -->
-		<button id="prev-btn" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-gray-800 text-white p-2">
-			←
-		</button>
-		<button id="next-btn" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-gray-800 text-white p-2">
-			→
-		</button>
+		<div class="swiper-button-prev"></div>
+		<div class="swiper-button-next"></div>
 	</div>
-
-	<script>
-		const carouselWrapper = document.getElementById('carousel-wrapper');
-const nextBtn = document.getElementById('next-btn');
-const prevBtn = document.getElementById('prev-btn');
-
-let currentOffset = 0;
-const itemWidth = carouselWrapper.children[0].offsetWidth;
-
-nextBtn.addEventListener('click', () => { // Move to the next image
-currentOffset -= itemWidth;
-if (Math.abs(currentOffset) >= carouselWrapper.scrollWidth) {
-currentOffset = 0; // Reset to the first image if we've reached the end
-}carouselWrapper.style.transform = `translateX(${currentOffset}px)`;
-});
-
-prevBtn.addEventListener('click', () => { // Move to the previous image
-currentOffset += itemWidth;
-if (currentOffset > 0) {
-currentOffset = -(carouselWrapper.scrollWidth - itemWidth); // Go back to the last image
-}carouselWrapper.style.transform = `translateX(${currentOffset}px)`;
-});
-	</script>
-
 
 {% endblock %}

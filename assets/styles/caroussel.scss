@@ -1,0 +1,37 @@
+.slide {
+  &-image {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    object-fit: cover;
+  }
+  &-text {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    color: #ffffff; 
+    font-family: 'Nunito Sans', 'Nunito Sans Fallback', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 0.5rem 0;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    background-image:  linear-gradient(0deg, rgba(0, 0, 0, 0.6) 10%, rgba(250, 250, 250, 0));
+  }
+}
+
+.swiper {
+  &-button-prev, &-button-next {
+    background-color: white;
+    border-radius: 50%;
+    width: 45px !important;
+    height: 45px !important;
+    color: black !important;
+
+    &::after {
+      font-size: 20px !important;
+    }
+  }
+
+}
