@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmer le téléphone
+{% endblock %}
+
+{% block body %}
+	<h1>Confirmer votre numéro de téléphone</h1>
+	{{ form_start(form) }}
+	{{ form_row(form.verificationCode) }}
+	<button class="btn">Vérifier le code</button>
+	{{ form_end(form) }}
+{% endblock %}
