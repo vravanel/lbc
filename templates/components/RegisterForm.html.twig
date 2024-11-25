@@ -1,0 +1,158 @@
+<div{{attributes}}>
+	{% if not step == 0 %}
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" style="width: {{ (step / 5) * 100 }}%;" aria-valuenow="{{ (step / 5) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+		</div>
+	{% endif %}
+	{{ form_start(form) }}
+	{% if step == 0 %}
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Créez un compte</h2>
+				<p class="card-text">
+					Bénéficiez d'une expérience personnalisée avec du contenu en lien avec votre activité et vos centres d'intérêt sur notre service.
+				</p>
+				<div class="radio-group">
+					{% for child in form.userType %}
+						<div class="form-check">
+							{{ form_widget(child, {
+                				'attr': {
+                    			'data-action': 'live#emit',
+                    			'data-live-event-param': 'step',
+								 'data-model': 'userType'
+                				}
+            				}) }}
+							{{ form_label(child) }}
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	{% if step == 1 %}
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Commençons par un e-mail</h2>
+				{{ form_row(form.email, {'attr': {'data-model': 'email'}}) }}
+			</div>
+			<a class="btn btn-primary {{ this.hasValidationErrorEmail ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="codeEmail">Continuer</a>
+
+		</div>
+	{% endif %}
+	{% if step == 2 %}
+		<div class="card">
+			<div class="card-body">
+				<h2 class="card-title">Vérifions ensemble votre e-mail</h2>
+				<p>Saisissez le code reçu à l'adresse e-mail :</p>
+				<p>email</p>
+				<div class="code-verification d-flex justify-content-center">
+					{{ form_row(form.number1, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code1'
+        }
+    }) }}
+					{{ form_row(form.number2, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code2'
+        }
+    }) }}
+					{{ form_row(form.number3, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code3'
+        }
+    }) }}
+					{{ form_row(form.number4, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code4'
+        }
+    }) }}
+					{{ form_row(form.number5, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code5'
+        }
+    }) }}
+					{{ form_row(form.number6, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'code6',
+            'data-action': 'live#action:prevent',
+			'data-live-action-param': 'validateCode'
+        }
+    }) }}
+				</div>
+
+			</div>
+		{% endif %}
+		{% if step == 3 %}
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card-title">Définissez votre mot de passe</h2>
+					{{ form_row(form.plainPassword, {'attr': {'data-model': 'password'}}) }}
+				</div>
+				<a class="btn btn-primary {{ this.hasValidationErrorPassword ? '' : 'disabled' }}" data-action='live#emit' , data-live-event-param='step'>Continuer</a>
+
+			</div>
+		{% endif %}
+		{% if step == 4 %}
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card-title">Sécurisons votre compte</h2>
+					{{ form_row(form.phone, {'attr': {'data-model': 'phone'}}) }}
+				</div>
+				<a class="btn btn-primary {{ this.hasValidationErrorPhone ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="verifyPhone">Continuer</a>
+
+			</div>
+		{% endif %}
+		{% if step == 5 %}
+			<div class="card">
+				<div class="card-body">
+					<h2 class="card-title">Sécurisons votre compte</h2>
+					<div class="code-verification d-flex justify-content-center">
+						{{ form_row(form.number1, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'codePhone1'
+        }
+    }) }}
+						{{ form_row(form.number2, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'codePhone2'
+        }
+    }) }}
+						{{ form_row(form.number3, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'codePhone3'
+        }
+    }) }}
+						{{ form_row(form.number6, {
+        'attr': {
+            'maxlength': '1',
+            'class': 'form-control text-center mx-1',
+            'data-model': 'codePhone4',
+            'data-action': 'live#action:prevent',
+			'data-live-action-param': 'validateCodePhone'
+        }
+    }) }}
+					</div>
+				</div>
+			</div>
+		{% endif %}
+		{{ form_end(form,  { 'render_rest': false }) }}
+
+	</div>

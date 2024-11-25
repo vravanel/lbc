@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\UserTypeEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -73,6 +74,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private ?bool $isPhoneVerified = false;
+
+    #[ORM\Column(enumType: UserTypeEnum::class)]
+    private ?UserTypeEnum $userType = null;
 
     public function __construct()
     {
@@ -322,6 +326,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoneVerified(bool $isPhoneVerified): static
     {
         $this->isPhoneVerified = $isPhoneVerified;
+
+        return $this;
+    }
+
+    public function getUserType(): ?UserTypeEnum
+    {
+        return $this->userType;
+    }
+
+    public function setUserType(UserTypeEnum $userType): static
+    {
+        $this->userType = $userType;
 
         return $this;
     }
