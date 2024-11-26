@@ -1,0 +1,23 @@
+.header_login {
+    height: 60px;
+    box-shadow : rgba(108, 129, 157, 0.5) 0px 4px 8px 0px;
+    &_div {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        
+        &_link {
+            position: relative;
+            left: 50px;
+            & > svg {    
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+        &_img {
+            width: auto;
+            height: 4rem;
+            margin: auto;
+        }
+    }
+}

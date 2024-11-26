@@ -1,0 +1,14 @@
+@import './../global.scss';
+@import '../variables.scss';
+@import './navbar.scss';
+@import './login.scss';
+@import './registration.scss';
+.main_login {
+    background-image: url('./../../images/login-illustration.png');
+    background-size: 1050px;
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 85%;
+    height: 88vh;
+}
+
