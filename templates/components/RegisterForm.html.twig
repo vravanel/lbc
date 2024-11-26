@@ -1,158 +1,174 @@
 <div{{attributes}}>
-	{% if not step == 0 %}
-		<div class="progress">
-			<div class="progress-bar" role="progressbar" style="width: {{ (step / 5) * 100 }}%;" aria-valuenow="{{ (step / 5) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+	<header class="header_login">
+		<div class="header_login_div">
+			<a href="#" class="header_login_div_link" data-action='live#emit' , data-live-event-param='step2'>{{ ux_icon('flowbite:arrow-left-outline') }}</a>
+			<img class="header_login_div_img" src="{{ asset('assets/images/leboncoin.png') }}" alt="Logo LeBonCoin">
 		</div>
-	{% endif %}
-	{{ form_start(form) }}
-	{% if step == 0 %}
-		<div class="card">
-			<div class="card-body">
-				<h2 class="card-title">Créez un compte</h2>
-				<p class="card-text">
-					Bénéficiez d'une expérience personnalisée avec du contenu en lien avec votre activité et vos centres d'intérêt sur notre service.
-				</p>
-				<div class="radio-group">
-					{% for child in form.userType %}
-						<div class="form-check">
-							{{ form_widget(child, {
+	</header>
+	<main class="main_login">
+		{% if not step == 0 %}
+			<div class="progress">
+				<div class="progress-bar" role="progressbar" style="width: {{ (step / 5) * 100 }}%;" aria-valuenow="{{ (step / 5) * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+			</div>
+		{% endif %}
+		{{ form_start(form) }}
+		{% if step == 0 %}
+			<div class="card card2">
+				<div class="card-body">
+					<h2 class="card-title">Créez un compte</h2>
+					<p class="card-text card-text2">
+						Bénéficiez d'une expérience personnalisée avec du contenu en lien avec votre activité et vos centres d'intérêt sur notre service.
+					</p>
+					<div class="radio-group d-flex flex-column gap-3">
+						{% for child in form.userType %}
+							<div class="d-flex align-items-start gap-3 text-body">
+								{{ form_widget(child, {
                 				'attr': {
                     			'data-action': 'live#emit',
                     			'data-live-event-param': 'step',
-								 'data-model': 'userType'
+								'data-model': 'userType',
+								'class': 'form-check-input rounded-circle border-2 shadow-sm'
                 				}
             				}) }}
-							{{ form_label(child) }}
-						</div>
-					{% endfor %}
+								{{ form_label(child, null, {
+        						'label_attr': {
+                    			'class': 'form-check-label cursor-pointer'
+                				}
+           					}) }}
+							</div>
+						{% endfor %}
+					</div>
 				</div>
 			</div>
-		</div>
-	{% endif %}
-	{% if step == 1 %}
-		<div class="card">
-			<div class="card-body">
-				<h2 class="card-title">Commençons par un e-mail</h2>
-				{{ form_row(form.email, {'attr': {'data-model': 'email'}}) }}
-			</div>
-			<a class="btn btn-primary {{ this.hasValidationErrorEmail ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="codeEmail">Continuer</a>
-
-		</div>
-	{% endif %}
-	{% if step == 2 %}
-		<div class="card">
-			<div class="card-body">
-				<h2 class="card-title">Vérifions ensemble votre e-mail</h2>
-				<p>Saisissez le code reçu à l'adresse e-mail :</p>
-				<p>email</p>
-				<div class="code-verification d-flex justify-content-center">
-					{{ form_row(form.number1, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code1'
-        }
-    }) }}
-					{{ form_row(form.number2, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code2'
-        }
-    }) }}
-					{{ form_row(form.number3, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code3'
-        }
-    }) }}
-					{{ form_row(form.number4, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code4'
-        }
-    }) }}
-					{{ form_row(form.number5, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code5'
-        }
-    }) }}
-					{{ form_row(form.number6, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'code6',
-            'data-action': 'live#action:prevent',
-			'data-live-action-param': 'validateCode'
-        }
-    }) }}
+		{% endif %}
+		{% if step == 1 %}
+			<div class="card card2">
+				<div class="card-body">
+					<h2 class="card-title">Commençons par un e-mail</h2>
+					{{ form_row(form.email, {'attr': {'data-model': 'email', 'class' : 'card-form-control'}}) }}
 				</div>
+				<a class="btn card-button {{ this.hasValidationErrorEmail ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="codeEmail">Continuer</a>
 
 			</div>
 		{% endif %}
+		{% if step == 2 %}
+			<div class="card card2">
+				<div class="card-body">
+					<h2 class="card-title">Vérifions ensemble votre e-mail</h2>
+					<p class="m-0 card-email-paragraph">Saisissez le code reçu à l'adresse e-mail :</p>
+					<p class="card-email card-email-paragraph">{{this.email}}</p>
+					<div class="code-verification d-flex justify-content-center gap-2">
+						{{ form_row(form.number1, {
+        					'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code1'
+       						}
+    					}) }}
+						{{ form_row(form.number2, {
+        					'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code2'
+        					}
+    					}) }}
+						{{ form_row(form.number3, {
+        					'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code3'
+        					}
+    					}) }}
+						{{ form_row(form.number4, {
+        					'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code4'
+							}
+						}) }}
+						{{ form_row(form.number5, {
+							'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code5'
+							}
+						}) }}
+						{{ form_row(form.number6, {
+							'attr': {
+								'maxlength': '1',
+								'class': 'form-control code-input text-center rounded-md border border-primary',
+								'data-model': 'code6',
+								'data-action': 'live#action:prevent',
+								'data-live-action-param': 'validateCode'
+							}
+						}) }}
+					</div>
+				</div>
+			</div>
+		{% endif %}
 		{% if step == 3 %}
-			<div class="card">
+			<div class="card card2">
 				<div class="card-body">
 					<h2 class="card-title">Définissez votre mot de passe</h2>
-					{{ form_row(form.plainPassword, {'attr': {'data-model': 'password'}}) }}
+					<p class="m-6 card-email-paragraph">Choisissez un mot de passe que vous n'utilisez nulle part ailleurs.</p>
+					{{ form_row(form.plainPassword, {'attr': {'data-model': 'password', 'class' : 'card-form-control'}}) }}
 				</div>
-				<a class="btn btn-primary {{ this.hasValidationErrorPassword ? '' : 'disabled' }}" data-action='live#emit' , data-live-event-param='step'>Continuer</a>
+				<a class="btn card-button {{ this.hasValidationErrorPassword ? '' : 'disabled' }}" data-action='live#emit' , data-live-event-param='step'>Continuer</a>
 
 			</div>
 		{% endif %}
 		{% if step == 4 %}
-			<div class="card">
+			<div class="card card2">
 				<div class="card-body">
 					<h2 class="card-title">Sécurisons votre compte</h2>
-					{{ form_row(form.phone, {'attr': {'data-model': 'phone'}}) }}
+					<p class="m-6 card-email-paragraph">Renseignez votre numéro de téléphone mobile.</p>
+					{{ form_row(form.phone, {'attr': {'data-model': 'phone', 'class' : 'card-form-control' }}) }}
 				</div>
-				<a class="btn btn-primary {{ this.hasValidationErrorPhone ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="verifyPhone">Continuer</a>
+				<a class="btn card-button {{ this.hasValidationErrorPhone ? '' : 'disabled' }}" data-action="live#action:prevent" data-live-action-param="verifyPhone">Continuer</a>
 
 			</div>
 		{% endif %}
 		{% if step == 5 %}
-			<div class="card">
+			<div class="card card2">
 				<div class="card-body">
 					<h2 class="card-title">Sécurisons votre compte</h2>
+					<p class="m-0 card-email-paragraph">Saisissez le code reçu au numéro de téléphone :</p>
+					<p class="card-email card-email-paragraph">{{this.phone}}</p>
 					<div class="code-verification d-flex justify-content-center">
 						{{ form_row(form.number1, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'codePhone1'
-        }
-    }) }}
+								'attr': {
+									'maxlength': '1',
+									'class': 'form-control code-input text-center rounded-md border border-primary',
+									'data-model': 'codePhone1'
+								}
+							}) }}
 						{{ form_row(form.number2, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'codePhone2'
-        }
-    }) }}
+								'attr': {
+									'maxlength': '1',
+									'class': 'form-control code-input text-center rounded-md border border-primary',
+									'data-model': 'codePhone2'
+								}
+							}) }}
 						{{ form_row(form.number3, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'codePhone3'
-        }
-    }) }}
+								'attr': {
+									'maxlength': '1',
+									'class': 'form-control code-input text-center rounded-md border border-primary',
+									'data-model': 'codePhone3'
+								}
+							}) }}
 						{{ form_row(form.number6, {
-        'attr': {
-            'maxlength': '1',
-            'class': 'form-control text-center mx-1',
-            'data-model': 'codePhone4',
-            'data-action': 'live#action:prevent',
-			'data-live-action-param': 'validateCodePhone'
-        }
-    }) }}
+								'attr': {
+									'maxlength': '1',
+									'class': 'form-control code-input text-center rounded-md border border-primary',
+									'data-model': 'codePhone4',
+									'data-action': 'live#action:prevent',
+									'data-live-action-param': 'validateCodePhone'
+								}
+							}) }}
 					</div>
 				</div>
 			</div>
 		{% endif %}
 		{{ form_end(form,  { 'render_rest': false }) }}
-
-	</div>
+	</main>
+</div>

@@ -6,7 +6,6 @@ use App\Entity\User;
 use App\Enum\UserTypeEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfonycasts\DynamicForms\DynamicFormBuilder;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,20 +23,27 @@ class RegistrationFormType extends AbstractType
                 'class' => UserTypeEnum::class,
                 'expanded' => true,
                 'multiple' => false,
-                'label' => UserTypeEnum::class,
                 'attr' => [
                     'class' => 'form-check'
                 ]
             ])
             ->add('email', EmailType::class, [
+                'label' => 'Email *',
                 'attr' => [
                     'class' => 'form-control'
+                ],
+                'label_attr' => [
+                    'class' => 'card-form-label'
                 ]
             ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
                 'mapped' => false,
+                'label' => 'Mot de passe *',
+                'label_attr' => [
+                    'class' => 'card-form-label'
+                ],
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
@@ -91,6 +97,10 @@ class RegistrationFormType extends AbstractType
 
             ->add('phone', NumberType::class, [
                 'attr' => ['class' => 'form-control'],
+                 'label' => 'Numéro de téléphone *',
+                'label_attr' => [
+                    'class' => 'card-form-label'
+                ],
             ])
         ;
     }

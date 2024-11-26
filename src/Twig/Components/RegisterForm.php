@@ -109,6 +109,11 @@ final class RegisterForm extends AbstractController
         $this->step++;
     }
 
+    #[LiveListener('step2')]
+    public function decrementStep()
+    {
+        $this->step--;
+    }
 
     #[LiveAction]
     public function codeEmail()
@@ -131,8 +136,8 @@ final class RegisterForm extends AbstractController
     {
         $code = $this->code1 . $this->code2 . $this->code3 . $this->code4 . $this->code5 . $this->code6;
         $this->isValid = $code === $this->codeVerifier;
+        $this->emit('step');
         if ($this->isValid === true) {
-            $this->emit('step');
         }
     }
 

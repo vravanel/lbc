@@ -1,9 +1,0 @@
-{% extends 'base.html.twig' %}
-
-{% block body %}
-	<h2>Vérification du téléphone</h2>
-	{{ form_start(phoneForm) }}
-	{{ form_row(phoneForm.phoneNumber) }}
-	<button type="submit">Envoyer le code de vérification</button>
-	{{ form_end(phoneForm) }}
-{% endblock %}

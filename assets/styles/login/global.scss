@@ -1,8 +1,12 @@
+@import "bootstrap/scss/bootstrap";
+
+
 @import './../global.scss';
 @import '../variables.scss';
 @import './navbar.scss';
 @import './login.scss';
 @import './registration.scss';
+
 .main_login {
     background-image: url('./../../images/login-illustration.png');
     background-size: 1050px;
