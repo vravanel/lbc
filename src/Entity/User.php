@@ -2,15 +2,18 @@
 
 namespace App\Entity;
 
+use App\Enum\UserTypeEnum;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -65,6 +68,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(targetEntity: Ad::class, mappedBy: 'user', orphanRemoval: true)]
     private Collection $ads;
+
+    #[ORM\Column]
+    private bool $isVerified = false;
+
+    #[ORM\Column]
+    private ?bool $isPhoneVerified = false;
+
+    #[ORM\Column(enumType: UserTypeEnum::class)]
+    private ?UserTypeEnum $userType = null;
 
     public function __construct()
     {
@@ -290,6 +302,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPersonalInfo(?PersonalInfo $personalInfo): static
     {
         $this->personalInfo = $personalInfo;
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isPhoneVerified(): ?bool
+    {
+        return $this->isPhoneVerified;
+    }
+
+    public function setPhoneVerified(bool $isPhoneVerified): static
+    {
+        $this->isPhoneVerified = $isPhoneVerified;
+
+        return $this;
+    }
+
+    public function getUserType(): ?UserTypeEnum
+    {
+        return $this->userType;
+    }
+
+    public function setUserType(UserTypeEnum $userType): static
+    {
+        $this->userType = $userType;
 
         return $this;
     }

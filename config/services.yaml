@@ -4,6 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    sinch.api_key: '%env(SINCH_API_KEY)%'
+    sinch.api_secret: '%env(SINCH_API_SECRET)%'
+    num_perso: '%env(NUM_PERSO)%'
 
 services:
     # default configuration for services in *this* file
@@ -19,6 +22,12 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+             
+    App\Service\SinchService:
+        arguments:
+            $apiKey: '%sinch.api_key%'
+            $apiSecret: '%sinch.api_secret%'
+            $numPerso: '%num_perso%'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

@@ -23,6 +23,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         "app": "./assets/app.js",
+        "global": "./assets/login.js"
       }
     }
   },  

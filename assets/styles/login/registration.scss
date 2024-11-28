@@ -1,0 +1,75 @@
+.card.card2 {
+    max-width: 500px;
+    min-height: 300px;
+}
+
+.card-text.card-text2 {
+    margin-top: 0.75rem;
+}
+
+.radio-group .form-check-input {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid #ACB8C7 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &:hover {
+      box-shadow: 0 0 0 6px  rgba(4, 134, 255, 0.1) !important;
+    }
+}
+
+.radio-group .form-check-input:checked {
+  background-color: #094171;
+}
+
+.radio-group .form-check-label {
+  align-self: center;
+}
+
+.progress {
+  height: 6px;
+}
+.progress-bar {
+  background-color: $color-primary;
+}
+
+.code-verification {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+
+  .form-control.code-input {
+    height: 80px;
+    min-width: 60px;
+    width: 50px; 
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 0;
+    margin: 0;
+    border-radius: 8px;
+    border: 1px solid #ced4da !important; 
+    box-shadow: none;
+
+      &:focus {
+        border-color: #202730 !important; 
+      }
+  }
+
+  .form-label {
+    font-size: 1rem;
+    color: #495057;
+  }
+}
+
+.card-email {
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.card-email-paragraph {
+  font-size: $font-size-subtitle;
+}
