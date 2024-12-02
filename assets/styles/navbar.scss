@@ -53,6 +53,15 @@
             background-color: #F0F2F5;
             border-radius:  1rem;
             padding: 0.65rem;
+            height: 50px;
+            transition: width 0.3s ease, margin-left 0.3s ease;
+            &:focus {
+                width: 600px;
+                margin-left: -300px;
+                border: solid 3px;
+                border-color: #202730 !important;
+                box-shadow: none;
+            }
         }
         & > button {
             position: absolute;
@@ -64,9 +73,13 @@
             right: 0.5rem;
             top: 18%;
 
-          &:hover {
-            background-color: #F07B42;
-          }         
+            &:hover {
+                background-color: #F07B42;
+            }         
+        }
+        & > .suggestions-list {
+            width: 600px;
+            margin-left: -300px;
         }
     }
 
