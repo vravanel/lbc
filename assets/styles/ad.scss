@@ -1,0 +1,61 @@
+.breadcrumb-item > a , .breadcrumb-item {
+    color: rgb(79, 96, 118);
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+.card-user {
+    width: 30%;
+
+    & > .user-info {
+        & > .user-initial2 {
+            width: 70px !important;
+            height: 70px !important;
+            font-size: 2rem !important;
+        }
+        
+        & > p {
+            font-size: 1.15rem;
+            color: $color-dark;
+        }
+    
+        & > .icon-arrow-outlined{
+            width: 1rem;
+            align-self: center;
+            margin-left: 6rem;
+            color: $color-dark;
+        }
+    }
+}
+
+@mixin button-link {
+    display: flex;
+    border-radius: 16px;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1.15rem;
+    font-weight: 700;
+    background-color: $color-primary;
+    color: white;
+    border: none;
+
+    &:hover {
+        background-color: #F07B42;
+    }
+}
+
+.button-link {
+   @include button-link();
+}
+
+.button-link2 {
+    @include button-link();
+    background-color: #094171;
+
+    &:hover {
+        background-color: #0D5CA0;
+    }
+}
+
+.icon-outline-lock, .icon-cb, .icon-visa, .icon-mastercard {
+    width: 1.15rem;
+}
