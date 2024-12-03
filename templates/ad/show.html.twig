@@ -1,8 +1,88 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdController!
+{% block title %}
+	{{ ad.title }}
 {% endblock %}
 
 {% block body %}
-	<h1>{{ad.id}}</h1>
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="/">Accueil</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="#">{{ad.subCategory.name}}</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="#">{{ad.city}}</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">{{ad.title}}</li>
+		</ol>
+	</nav>
+	<div>
+		<img src="https://picsum.photos/id/{{ad.id}}/200/300" alt="{{ad.title}}" class="">
+		<img src="https://picsum.photos/id/{{ad.id}}/200/300" alt="{{ad.title}}" class="">
+		<img src="https://picsum.photos/id/{{ad.id}}/200/300" alt="{{ad.title}}" class="">
+		<div class="w-25">
+			{{ ux_icon('ph:heart-bold', {class: "icon-heart"}) }}
+		</div>
+	</div>
+	<div>
+		<div class="user-info d-flex align-items-center gap-2">
+			<div class="user-initial d-flex align-items-center justify-content-center">
+				{{ ad.user.username | slice(0, 1) }}
+			</div>
+			<p class="mb-0">{{ ad.user.username }}</p>
+		</div>
+		<div>
+			<a class="btn" href="#">Acheter</a>
+			<a class="btn" href="#">Message</a>
+			<span>
+				Paiement sécurisé</span>
+		</div>
+	</div>
+	<h2>{{ad.title}}</h2>
+	<p>
+		{{ad.price}}
+		€
+	</p>
+	<div class="slide-delivery-box d-inline-flex align-items-center justify-content-start gap-2 rounded-5 text-dark">
+		Livraison possible
+	</div>
+	<div>{{ ad.createAt | date("m/d/Y H:i", "Europe/Paris") }}</div>
+	<div class="divider"></div>
+	<div class="divider"></div>
+	<img src="{{asset('assets/images/secured-payment.svg')}}" alt="secured-payment">
+
+	<div>
+		<div class="w-25">
+			{{ ux_icon('ant-design:euro-outlined') }}
+			<p>Votre argent est sécurisé et versé au bon moment</p>
+		</div>
+		<div class="w-25">
+			{{ ux_icon('entypo:chat') }}
+			<p>Notre service client dédié vous accompagne</p>
+		</div>
+		<a class="icon-link icon-link-hover" href="#">
+			En savoir plus
+			{{ ux_icon('icons8:right-arrow', {class: "icon-arrow"}) }}
+		</a>
+	</div>
+
+	<div class="divider"></div>
+
+	<h2>Description</h2>
+	<p>{{ad.description}}</p>
+	<button>Voir plus</button>
+	<div class="divider"></div>
+
+	<h2>Critères</h2>
+	<div class="divider"></div>
+	<div class="w-25">
+		{{ ux_icon('game-icons:position-marker') }}
+		{{ ad.city }}
+		{{ ad.zipCode }}
+	</div>
+
+
 {% endblock %}
