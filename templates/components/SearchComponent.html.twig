@@ -1,0 +1,20 @@
+<div{{attributes}}>
+	<form class="d-flex justify-content-center search-form" role="search">
+		<div class="position-relative">
+			<input class="form-control me-2" type="search" placeholder="Rechercher sur leboncoin" aria-label="Search" data-model="search">
+
+			<button class="btn btn-outline-success d-flex justify-content-center" type="submit">
+				{{ ux_icon('iconamoon:search') }}
+			</button>
+
+			<div class="list-group position-absolute z-3 suggestions-list">
+				{% for ad in this.searchAd %}
+					<a href="#" class="list-group-item list-group-item-action">
+						{{ ad.title }}
+					</a>
+				{% endfor %}
+			</div>
+		</div>
+	</form>
+
+</div>
