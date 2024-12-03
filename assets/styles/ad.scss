@@ -59,3 +59,58 @@
 .icon-outline-lock, .icon-cb, .icon-visa, .icon-mastercard {
     width: 1.15rem;
 }
+
+.circle-icon {
+    width: 2.25rem;
+    height: 2.25rem;
+    background-color: #E6F2FD;
+    border-radius: 50%;
+}
+
+.icon-euro, .icon-chat {
+    width: 1.25rem;
+    align-self: center;
+}
+
+.icon-link {
+    color : #204171 ;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+.title-ad, .ad-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.ad-title-principal {
+    font-size: 1.75rem;
+    font-weight: 700;
+}
+
+
+.paragraph-ad {
+    width: 65ch;
+    font-size: 1.1rem;
+}
+
+.button-ad {
+    background-color: white !important;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.icon-marker {
+    width: 1.5rem;
+}
+
+.divider2 {
+    height: 2px;
+    border-bottom: 1px solid rgba(79, 96, 118, 0.16);
+}
+
+.ad-date  {
+    font-size: .8rem;
+    color: #8A9199;
+}
