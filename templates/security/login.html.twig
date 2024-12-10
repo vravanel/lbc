@@ -36,7 +36,7 @@
 					</div>
 					<div class="">
 						<label for="password" class="card-form-label">Mot de passe *</label>
-						<input type="password" id="password" class="card-form-control" autocomplete="current-password" required>
+						<input type="password" id="password" class="card-form-control" name="_password" autocomplete="current-password" required>
 					</div>
 					<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
