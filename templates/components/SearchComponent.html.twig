@@ -9,7 +9,7 @@
 
 			<div class="list-group position-absolute z-3 suggestions-list">
 				{% for ad in this.searchAd %}
-					<a href="#" class="list-group-item list-group-item-action">
+					<a href="{{path('ad_show', {id : ad.id})}}" class="list-group-item list-group-item-action">
 						{{ ad.title }}
 					</a>
 				{% endfor %}

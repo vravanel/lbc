@@ -19,6 +19,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveListener;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsLiveComponent]
 final class RegisterForm extends AbstractController
@@ -84,7 +85,7 @@ final class RegisterForm extends AbstractController
     #[LiveProp(writable: true)]
     public ?UserTypeEnum $userType = null;
 
-    public function __construct(private MailerInterface $mailer, private SinchService $sinchService) {}
+    public function __construct(private MailerInterface $mailer, private SinchService $sinchService, private UserPasswordHasherInterface $passwordHasher) {}
 
 
     protected function instantiateForm(): FormInterface
@@ -182,7 +183,7 @@ final class RegisterForm extends AbstractController
         $this->user = new User();
         $this->user->setPhoneVerified(true);
         $this->user->setEmail($this->email);
-        $this->user->setPassword($this->password);
+        $this->user->setPassword($this->passwordHasher->hashPassword($this->user, $this->password));
         $this->user->setPhone($this->phone);
         $this->user->setVerified(true);
         $this->user->setUserType($this->userType);

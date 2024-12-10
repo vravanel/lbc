@@ -13,6 +13,7 @@ class AdController extends AbstractController
     #[Route('/{id}', name: '_show')]
     public function show(Ad $ad): Response
     {
+
         return $this->render('ad/show.html.twig', [
             'ad' => $ad,
         ]);

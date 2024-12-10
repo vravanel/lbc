@@ -1,8 +1,112 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdController!
+{% block title %}
+	{{ ad.title }}
 {% endblock %}
 
 {% block body %}
-	<h1>{{ad.id}}</h1>
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mt-3">
+		<ol class="breadcrumb">
+			<li class="breadcrumb-item">
+				<a href="/">Accueil</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="#">{{ad.subCategory.name}}</a>
+			</li>
+			<li class="breadcrumb-item">
+				<a href="#">{{ad.city}}</a>
+			</li>
+			<li class="breadcrumb-item active" aria-current="page">{{ad.title}}</li>
+		</ol>
+	</nav>
+	<section class="d-flex">
+		<div class="d-flex me-5">
+			<img src="https://picsum.photos/id/{{ad.id}}/220/320" alt="{{ad.title}}" class="me-2 rounded-start">
+			<img src="https://picsum.photos/id/{{ad.id}}/220/320" alt="{{ad.title}}" class="me-2">
+			<div class="image-container">
+				<img src="https://picsum.photos/id/{{ad.id}}/220/320" alt="{{ad.title}}" class="rounded-end h-100">
+				<div class="container-icon-heart">
+					{{ ux_icon('ph:heart-bold', {class: "icon-heart"}) }}
+				</div>
+			</div>
+		</div>
+		<div class="border rounded-4 p-3 card-user">
+			<a href="#" class="user-info d-flex align-items-start gap-3 mt-0 text-decoration-none">
+				<div class="user-initial user-initial2">
+					{{ ad.user.username | slice(0, 1) }}
+				</div>
+				<p class="mb-0">{{ ad.user.username }}</p>
+				{{ ux_icon('weui:arrow-outlined', {class: "icon-arrow-outlined"}) }}
+			</a>
+			<div class="d-flex flex-column align-items-center mt-5">
+				<a href="#" type="button" class="btn btn-outline-primary button-link justify-content-center">Acheter</a>
+				<a href="#" type="button" class="btn btn-outline-primary button-link2 justify-content-center mt-2">Message</a>
+
+				<p class="mt-4">
+					{{ ux_icon('ic:outline-lock', {class:"icon-outline-lock"}) }}
+					<spanclass= class="me-1">
+						Paiement sécurisé
+					</spanclass="me-1">
+					<spanclass=>
+						{{ ux_icon('f7:creditcard', {class:"icon-cb"}) }}
+					</spanclass="me-1">
+					<span class="me-1">
+						{{ ux_icon('logos:visa', {class:"icon-visa"}) }}
+					</span>
+					<span>
+						{{ ux_icon('logos:mastercard', {class:"icon-mastercard"}) }}
+					</span>
+				</p>
+			</div>
+		</div>
+	</section>
+	<h2 class="mt-4 ad-title-principal">{{ad.title}}</h2>
+	<div class="d-flex mt-3 align-items-center">
+		<p class="me-2 mb-0 ad-price">
+			{{ad.price}}
+			€
+		</p>
+		<div class="slide-delivery-box d-inline-flex align-items-center justify-content-start gap-2 rounded-5 text-dark">
+			Livraison possible
+		</div>
+	</div>
+
+	<div class="mt-3 ad-date">{{ ad.createAt | date("m/d/Y H:i", "Europe/Paris") }}</div>
+	<div class="divider2 mt-3 w-50"></div>
+	<div class="divider2 mt-5 w-50"></div>
+	<img src="{{asset('assets/images/secured-payment.svg')}}" alt="secured-payment" class="mt-4">
+
+	<div>
+		<div class="d-flex align-items-center mt-5">
+			<div class="circle-icon d-flex justify-content-center align-items-center">
+				{{ ux_icon('ant-design:euro-outlined', {class: "icon-euro"}) }}
+			</div>
+			<p class="ms-2 mb-0 paragraph-ad">Votre argent est sécurisé et versé au bon moment</p>
+		</div>
+		<div class="d-flex align-items-center mt-4">
+			<div class="circle-icon d-flex justify-content-center align-items-center">
+				{{ ux_icon('bx:chat', {class: "icon-chat"}) }}
+			</div>
+			<p class="ms-2 mb-0 paragraph-ad">Notre service client dédié vous accompagne</p>
+		</div>
+		<a class=" icon-link icon-link-hover mt-4 text-decoration-none mb-4" href=" #">
+			En savoir plus{{ ux_icon('icons8:right-arrow', {class: "icon-arrow"}) }}
+		</a>
+	</div>
+
+	<div class="divider2 mb-4 w-50"></div>
+
+	<h2 class="title-ad">Description</h2>
+	<p class="paragraph-ad">{{ad.description}}</p>
+	<button class="text-decoration-underline button-ad p-0">Voir plus</button>
+	<div class="divider2 w-50 mt-4 mb-4"></div>
+
+	<h2 class="title-ad">Critères</h2>
+	<div class="divider2 w-50 mt-4 mb-4"></div>
+	<div class="w-25 title-ad">
+		{{ ux_icon('akar-icons:location', {class: "icon-marker"}) }}
+		{{ ad.city }}
+		({{ ad.zipCode }})
+	</div>
+	<div class="divider2 w-50 mt-4 mb-4"></div>
 {% endblock %}
